@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GTA 6 Launch Checklist — Day-One Prep</title>
+  <meta name="description" content="Printable-style GTA 6 launch checklist: accounts, storage, network, and comfort prep. Progress saves in your browser. Unofficial fan tool.">
+  <link rel="canonical" href="https://example.com/checklist.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GTA 6 Launch Checklist">
+  <meta property="og:description" content="Day-one prep checklist for GTA 6 — accounts, storage, unlock time reminder. Saves locally.">
+  <meta property="og:url" content="https://example.com/checklist.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="GTA 6 Launch Checklist">
+  <meta name="twitter:description" content="Launch checklist with local progress tracking. Unofficial fan utility.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html">
+        <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff4d9a"/><stop offset="100%" stop-color="#ff8a3d"/></linearGradient></defs>
+          <rect width="40" height="40" rx="10" fill="#1a0f28"/>
+          <path d="M8 26 L20 8 L32 26 Z" fill="none" stroke="url(#lg)" stroke-width="2.5"/>
+          <circle cx="20" cy="22" r="3" fill="#a855f7"/>
+        </svg>
+        <span class="logo-text">GTA 6 Hub</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="countdown.html">Countdown</a></li>
+          <li><a href="edition-quiz.html">Edition quiz</a></li>
+          <li><a href="checklist.html">Checklist</a></li>
+          <li><a href="setup-check.html">Setup check</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <p class="eyebrow">Tool</p>
+    <h1>GTA 6 launch checklist</h1>
+    <p class="lede">Tick off accounts, storage, and day-one prep. Progress stays in this browser via localStorage — nothing is uploaded.</p>
+
+    <div class="hero-panel" style="margin:1.25rem 0;">
+      <div class="progress" aria-hidden="true">
+        <div class="progress-bar" id="checklist-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+      </div>
+      <p class="progress-label" id="checklist-progress-label">0 of 0 done</p>
+      <div class="btn-row">
+        <button class="btn btn-ghost" type="button" id="checklist-reset">Reset checklist</button>
+        <a class="btn btn-secondary" href="countdown.html">Check unlock time</a>
+      </div>
+    </div>
+
+    <div class="ad-slot" data-ad="checklist" aria-hidden="true">Ad slot</div>
+
+    <div id="checklist-root"></div>
+
+    <section class="section prose" aria-labelledby="why-check">
+      <h2 id="why-check">Why use a launch checklist?</h2>
+      <p>Launch week chaos is usually boring: wrong account signed in, not enough free SSD space, payment method expired, or downloading overnight with no idea when the store will unlock. A short GTA 6 launch checklist keeps those failures off the critical path so you can focus on actually starting the game.</p>
+      <p>Items here are generic best practices — not Rockstar support docs. Install size and online multiplayer subscription rules should be verified on the official PlayStation, Xbox, or Rockstar pages closer to 19 November 2026. Edit <code>data/checklist.json</code> if you want to add region-specific steps (for example UPI payment reminders for Indian storefronts).</p>
+      <p>Pair this list with the <a href="countdown.html">countdown / timezone tool</a> and the <a href="setup-check.html">console comparison</a> so storage and unlock expectations stay honest while details remain <span class="badge">unconfirmed</span>.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="privacy.html">Privacy</a>
+        <a href="about.html">About</a>
+        <a href="index.html">Home</a>
+      </nav>
+      <p class="disclaimer">Unofficial fan site. Not affiliated with or endorsed by Rockstar Games or Take-Two Interactive. Grand Theft Auto is a trademark of its respective owners.</p>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/checklist.js"></script>
+</body>
+</html>

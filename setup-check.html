@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GTA 6 Setup Check — PS5 vs Xbox Series X|S</title>
+  <meta name="description" content="Compare PS5, Xbox Series X, and Series S for GTA 6 launch readiness. File size, resolution, and FPS rows stay unconfirmed until official specs land.">
+  <link rel="canonical" href="https://example.com/setup-check.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GTA 6 Setup Check — PS5 vs Series X|S">
+  <meta property="og:description" content="Console comparison for GTA 6 launch platforms with honest unconfirmed placeholders.">
+  <meta property="og:url" content="https://example.com/setup-check.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="GTA 6 Setup Check">
+  <meta name="twitter:description" content="PS5 vs Series X vs Series S comparison for launch week.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html">
+        <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff4d9a"/><stop offset="100%" stop-color="#ff8a3d"/></linearGradient></defs>
+          <rect width="40" height="40" rx="10" fill="#1a0f28"/>
+          <path d="M8 26 L20 8 L32 26 Z" fill="none" stroke="url(#lg)" stroke-width="2.5"/>
+          <circle cx="20" cy="22" r="3" fill="#a855f7"/>
+        </svg>
+        <span class="logo-text">GTA 6 Hub</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="countdown.html">Countdown</a></li>
+          <li><a href="edition-quiz.html">Edition quiz</a></li>
+          <li><a href="checklist.html">Checklist</a></li>
+          <li><a href="setup-check.html">Setup check</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <p class="eyebrow">Tool</p>
+    <h1>Console setup check</h1>
+    <p class="lede">Side-by-side look at PS5, Xbox Series X, and Xbox Series S for launch week. Hardware facts stay general; GTA 6-specific tech rows are placeholders.</p>
+
+    <div class="notice">
+      <strong>Unconfirmed GTA 6 tech specs.</strong> Resolution, frame-rate modes, and install size must be verified on official Rockstar / store pages. PC is not announced.
+    </div>
+
+    <div class="ad-slot" data-ad="setup" aria-hidden="true">Ad slot</div>
+
+    <section class="section" aria-labelledby="compare-title">
+      <h2 id="compare-title">Comparison</h2>
+      <div class="table-wrap">
+        <table class="compare-table" id="compare-table">
+          <thead>
+            <tr>
+              <th scope="col">Topic</th>
+              <th scope="col">PlayStation 5</th>
+              <th scope="col">Xbox Series X</th>
+              <th scope="col">Xbox Series S</th>
+            </tr>
+          </thead>
+          <tbody id="compare-body">
+            <tr><td colspan="4">Loading <code>data/consoles.json</code>…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section prose" aria-labelledby="setup-help">
+      <h2 id="setup-help">Reading the table honestly</h2>
+      <p>PS5 and Xbox Series X|S are the confirmed launch platforms for 19 November 2026. Series S is part of that Xbox family, but digital-only hardware and lower GPU headroom mean you should wait for Rockstar’s own Series S notes before promising friends a mirrored visual mode.</p>
+      <p>Rows tagged <span class="badge">unconfirmed</span> come straight from editable JSON with TODO strings. Replace them when Newswire or the store listing publishes install size and performance modes. Until then, free up generous SSD space and keep console system software updated — those steps help regardless of the final number.</p>
+      <p>After you pick a platform, run through the <a href="checklist.html">launch checklist</a> and bookmark the <a href="countdown.html">unlock time converter</a> for your timezone.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="privacy.html">Privacy</a>
+        <a href="about.html">About</a>
+        <a href="index.html">Home</a>
+      </nav>
+      <p class="disclaimer">Unofficial fan site. Not affiliated with or endorsed by Rockstar Games or Take-Two Interactive. Grand Theft Auto is a trademark of its respective owners.</p>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+    (function () {
+      function cellHtml(val) {
+        if (!val) return "—";
+        var html = val.text || "";
+        if (val.unconfirmed) {
+          html += ' <span class="badge">unconfirmed</span>';
+        }
+        return html;
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("data/consoles.json")
+          .then(function (r) { if (!r.ok) throw new Error("fail"); return r.json(); })
+          .then(function (data) {
+            var body = document.getElementById("compare-body");
+            if (!body) return;
+            body.innerHTML = "";
+            (data.rows || []).forEach(function (row) {
+              var tr = document.createElement("tr");
+              tr.innerHTML =
+                "<th scope=\"row\">" + row.label + "</th>" +
+                "<td>" + cellHtml(row.values["ps5"]) + "</td>" +
+                "<td>" + cellHtml(row.values["series-x"]) + "</td>" +
+                "<td>" + cellHtml(row.values["series-s"]) + "</td>";
+              body.appendChild(tr);
+            });
+          })
+          .catch(function () {
+            var body = document.getElementById("compare-body");
+            if (body) {
+              body.innerHTML = "<tr><td colspan=\"4\">Could not load data/consoles.json. Serve the site over HTTP.</td></tr>";
+            }
+          });
+      });
+    })();
+  </script>
+</body>
+</html>

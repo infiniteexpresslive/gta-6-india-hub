@@ -1,0 +1,5 @@
+# GTA 6 Hub — TODO: replace example.com with your live domain
+User-agent: *
+Allow: /
+
+Sitemap: https://example.com/sitemap.xml
