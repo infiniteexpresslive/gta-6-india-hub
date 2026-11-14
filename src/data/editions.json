@@ -1,0 +1,88 @@
+{
+  "_meta": {
+    "note": "PLACEHOLDER edition data — not official Rockstar names, prices, or contents.",
+    "todo": "TODO: verify on official source (Rockstar / PS Store India / Microsoft Store India)."
+  },
+  "questions": [
+    {
+      "id": "platform",
+      "text": "Which platform are you buying for?",
+      "options": [
+        { "id": "ps5", "label": "PlayStation 5", "scores": { "standard": 1, "deluxe": 1, "collector": 1 } },
+        { "id": "xbox", "label": "Xbox Series X|S", "scores": { "standard": 1, "deluxe": 1, "collector": 1 } },
+        { "id": "undecided", "label": "Not sure yet", "scores": { "standard": 2 } }
+      ]
+    },
+    {
+      "id": "budget",
+      "text": "What's your comfortable spend in ₹?",
+      "options": [
+        { "id": "low", "label": "Keep it affordable — base game only", "scores": { "standard": 3 } },
+        { "id": "mid", "label": "Okay paying a bit more for extras", "scores": { "deluxe": 3, "standard": 1 } },
+        { "id": "high", "label": "Want the fullest / collector-style package", "scores": { "collector": 3, "deluxe": 1 } }
+      ]
+    },
+    {
+      "id": "format",
+      "text": "Digital download or physical disc?",
+      "options": [
+        { "id": "digital", "label": "Digital only", "scores": { "standard": 1, "deluxe": 2 } },
+        { "id": "physical", "label": "Prefer a disc / box", "scores": { "collector": 2, "standard": 1 } },
+        { "id": "either", "label": "Either is fine", "scores": { "standard": 1, "deluxe": 1 } }
+      ]
+    },
+    {
+      "id": "extras",
+      "text": "Do bonus content or early unlocks matter?",
+      "options": [
+        { "id": "must", "label": "Yes — I want extras if offered", "scores": { "deluxe": 3, "collector": 2 } },
+        { "id": "nice", "label": "Nice to have, not required", "scores": { "deluxe": 1, "standard": 1 } },
+        { "id": "no", "label": "Just the base game", "scores": { "standard": 3 } }
+      ]
+    },
+    {
+      "id": "shelf",
+      "text": "Are you a collector who likes display items?",
+      "options": [
+        { "id": "yes", "label": "Yes — statues, steelbooks, art interest me", "scores": { "collector": 4 } },
+        { "id": "maybe", "label": "Only if the ₹ price is reasonable", "scores": { "deluxe": 2, "collector": 1 } },
+        { "id": "no", "label": "No — gameplay only", "scores": { "standard": 2, "deluxe": 1 } }
+      ]
+    },
+    {
+      "id": "timing",
+      "text": "Will you play on day one in IST?",
+      "options": [
+        { "id": "dayone", "label": "Absolutely — launch day / night", "scores": { "deluxe": 1, "standard": 1, "collector": 1 } },
+        { "id": "soon", "label": "Within the first week or two", "scores": { "standard": 1, "deluxe": 1 } },
+        { "id": "later", "label": "I'll wait for reviews or a sale", "scores": { "standard": 3 } }
+      ]
+    }
+  ],
+  "editions": {
+    "standard": {
+      "id": "standard",
+      "name": "Standard Edition",
+      "unconfirmed": true,
+      "priceHint": "Unconfirmed — check official Indian stores for ₹ price",
+      "summary": "Best fit if you mainly want the base game at the lowest typical price. Edition name, contents, and INR price are unconfirmed — check PS Store India or Microsoft Store India.",
+      "affiliateKey": "standard"
+    },
+    "deluxe": {
+      "id": "deluxe",
+      "name": "Deluxe / Premium-style Edition",
+      "unconfirmed": true,
+      "priceHint": "Unconfirmed — check official stores for ₹ price and edition name",
+      "summary": "For shoppers open to paying more for digital extras (if offered). Exact bonus content and naming are unconfirmed.",
+      "affiliateKey": "deluxe"
+    },
+    "collector": {
+      "id": "collector",
+      "name": "Collector-style Edition",
+      "unconfirmed": true,
+      "priceHint": "Unconfirmed — check official channels for availability and ₹ price in India",
+      "summary": "For collectors who want physical extras. Confirm on official channels before buying from third parties — India availability may differ.",
+      "affiliateKey": "collector"
+    }
+  }
+}

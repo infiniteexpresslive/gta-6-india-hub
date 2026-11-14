@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GTA 6 Countdown &amp; Unlock Time India (IST) — UnlockIST</title>
+  <meta name="description" content="GTA 6 countdown to 19 Nov 2026 with unlock time converter for India IST and major cities. Release time in your timezone — clock still unconfirmed.">
+  <link rel="canonical" href="https://example.com/countdown.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GTA 6 Countdown &amp; Unlock Time India (IST)">
+  <meta property="og:description" content="Live GTA 6 countdown and IST-friendly unlock time converter. Unofficial.">
+  <meta property="og:url" content="https://example.com/countdown.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="GTA 6 Countdown &amp; IST Unlock Time">
+  <meta name="twitter:description" content="Countdown plus unlock time India. UnlockIST fan tool.">
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/bmc/bmc-logo.png">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {"@type":"Question","name":"When does GTA 6 release?","acceptedAnswer":{"@type":"Answer","text":"Grand Theft Auto VI is scheduled for Thursday, 19 November 2026 on PlayStation 5 and Xbox Series X|S. Exact worldwide unlock clock time is unconfirmed on this fan site."}},
+      {"@type":"Question","name":"What is the GTA 6 unlock time in India (IST)?","acceptedAnswer":{"@type":"Answer","text":"Exact unlock time for India is unconfirmed. UnlockIST defaults to local midnight on 19 Nov 2026 in Asia/Kolkata (IST) as a working assumption until Rockstar posts an official clock time."}},
+      {"@type":"Question","name":"How do I see GTA 6 release time in my timezone?","acceptedAnswer":{"@type":"Answer","text":"Open the Countdown page, choose your IANA timezone, and read the converted unlock time. Indian cities and global cities are listed below."}},
+      {"@type":"Question","name":"Is there a confirmed worldwide GTA 6 unlock time?","acceptedAnswer":{"@type":"Answer","text":"No single worldwide unlock clock time is treated as confirmed on this fan site. Watch official Rockstar Games announcements and your platform store for the real unlock time."}},
+      {"@type":"Question","name":"Is GTA 6 coming to PC at launch?","acceptedAnswer":{"@type":"Answer","text":"A PC version has not been announced as of this site's last update. Launch platforms listed are PS5 and Xbox Series X|S."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html">
+        <img class="logo-mark" src="assets/bmc/bmc-logo.png" width="36" height="36" alt="" decoding="async">
+        <span class="logo-text" data-brand>UnlockIST</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg></button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="countdown.html">Countdown</a></li>
+          <li><a href="download-calculator.html">Download time</a></li>
+          <li><a href="cost-calculator.html">Cost in ₹</a></li>
+          <li><a href="launch-planner.html">Launch planner</a></li>
+          <li><a href="edition-quiz.html">Edition quiz</a></li>
+          <li><a href="support.html">Support</a></li><li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <p class="eyebrow">Tool</p>
+    <h1>GTA 6 countdown &amp; unlock time (IST)</h1>
+    <p class="lede">Live countdown to the announced date, with timezone conversion defaulting toward India (Asia/Kolkata).</p>
+
+    <div id="unlock-notice" class="notice" role="status">
+      <strong data-i18n="countdown.notice">Unlock time not officially confirmed.</strong> Rockstar announced 19 Nov 2026 for PS5 &amp; Xbox Series X|S, but not a single worldwide clock time on this site’s sources. Times below are planning assumptions until an official unlock is posted.
+    </div>
+
+    <section class="section hero-panel" aria-labelledby="cd-title">
+      <h2 id="cd-title" class="mt-0">Live countdown</h2>
+      <div id="page-countdown"></div>
+      <p id="countdown-status" class="countdown-status"></p>
+      <p id="unlock-mode-label" class="help-text"></p>
+      <div class="share-bar">
+        <button type="button" class="btn btn-ghost" data-share data-i18n="cta.share">Share result</button>
+        <button type="button" class="btn btn-secondary" data-copy data-i18n="cta.copy">Copy</button>
+      </div>
+      <p class="share-status" id="share-status" aria-live="polite"></p>
+    </section>
+
+    <div class="ad-slot" aria-hidden="true">Ad slot</div>
+
+    <section class="section" aria-labelledby="tz-title">
+      <h2 id="tz-title">Timezone converter</h2>
+      <div class="form-box">
+        <label for="timezone-select">Your timezone</label>
+        <select id="timezone-select"></select>
+        <p class="help-text">India users: choose <strong>Asia/Kolkata (IST)</strong>.</p>
+        <p style="margin:1rem 0 0;"><strong>Assumed unlock in selected zone:</strong></p>
+        <p id="converted-time" class="lede mb-0" style="color:var(--orange);"></p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="cities-title">
+      <h2 id="cities-title">Cities (incl. India)</h2>
+      <ul class="tz-list" id="city-times"></ul>
+    </section>
+
+    <section class="section prose" aria-labelledby="about-cd">
+      <h2 id="about-cd">How to read this countdown</h2>
+      <p>Searches for “GTA 6 countdown”, “unlock time India”, and “release time in my timezone” spike hard near launch. UnlockIST answers them without inventing Rockstar clock times. Default mode is <strong>local-midnight</strong>: 00:00 on 19 November 2026 in your selected timezone. That is a convenience assumption for IST planners, not an official statement.</p>
+      <p>Until Rockstar posts an official unlock clock time, treat every converted time as provisional and double-check Newswire or your platform store on launch day. A PC release is not announced here. Past the assumed instant, the widget shows <strong>It’s out!</strong> — actual store unlock may still differ by region.</p>
+    </section>
+
+    <section class="section faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">FAQ</h2>
+      <details><summary>When does GTA 6 release?</summary><p>Thursday, 19 November 2026 on PS5 and Xbox Series X|S. Exact clock time remains unconfirmed here.</p></details>
+      <details><summary>Unlock time in India?</summary><p>Use Asia/Kolkata. Until confirmed, we show local midnight IST on launch day as a placeholder.</p></details>
+      <details><summary>Why “It’s out!”?</summary><p>Your device clock is past the configured launch instant for the selected timezone.</p></details>
+      <details><summary>Worldwide unlock confirmed?</summary><p>Not on this fan site’s sources. Exact unlock time is still unconfirmed — check official Rockstar Games announcements and your PS or Xbox store closer to launch.</p></details>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="about.html">About</a>
+        <a href="index.html">Home</a>
+      </nav>
+      <p class="disclaimer" data-disclaimer>Unofficial fan site. Not affiliated with or endorsed by Rockstar Games or Take-Two Interactive. Grand Theft Auto is a trademark of its respective owners.</p>
+    </div>
+  </footer>
+  <script src="config.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/countdown.js"></script>
+</body>
+</html>

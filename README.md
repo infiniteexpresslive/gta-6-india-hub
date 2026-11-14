@@ -6,11 +6,15 @@ India-first unofficial fan utilities: **IST countdown**, **download time**, **co
 
 ## Stack
 
-- Plain HTML / CSS / vanilla JS (no build step)
-- Strings: `i18n/en.json` (ready for `ta` / `hi` later)
-- Facts: `config.js` + `data/*.json`
+- Plain HTML / CSS / vanilla JS
+- **Readable sources:** `src/` (edit here)
+- **Deploy root:** minified HTML/CSS/JS at repo root (harder for casual reading)
+- **Always editable at root:** `config.js`, `data/*.json`, `i18n/en.json`, `assets/`
+- Rebuild after editing `src/`: `npm install` then `npm run build`
 
 Brand placeholder in `config.js` → `siteName`: `UnlockIST` | `Ready for VI` | `GTA6 Prep India`.
+
+Backup branch with pre-minify tree: `backup/readable-pre-minify`.
 
 ## Open locally
 
@@ -21,7 +25,7 @@ cd "H:/DEV/GTA 6 HUB"
 python -m http.server 8080
 ```
 
-Open `http://localhost:8080`.
+Open `http://localhost:8080` (serves minified root + readable config/data).
 
 ## Deploy
 
