@@ -95,7 +95,8 @@
       '" rel="sponsored noopener" target="_blank">Check price</a>' +
       '<button type="button" class="btn btn-ghost" data-share>Share result</button>' +
       '<button type="button" class="btn btn-secondary" data-copy>Copy</button>' +
-      '</div><p class="disclosure" data-i18n="affiliate.disclosure">' +
+      '</div><div data-support-slot="result" class="support-slot support-slot-result"></div>' +
+      '<p class="disclosure" data-i18n="affiliate.disclosure">' +
       G.t("affiliate.disclosure") +
       '</p><p class="share-status" id="share-status" aria-live="polite"></p></div>';
     panel.classList.add("is-visible");
@@ -109,6 +110,7 @@
     G.wireShareButtons(function () {
       return { title: cfg.siteName || "UnlockIST", text: lastText, url: location.href };
     });
+    if (G.mountSupportUI) G.mountSupportUI();
     panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 

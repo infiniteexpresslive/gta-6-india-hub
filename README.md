@@ -41,6 +41,7 @@ Open `http://localhost:8080`.
 | `adsenseClientId` / `analyticsId` | config.js | Empty = ads hidden |
 | `affiliateLinks` | config.js | Replace example URLs |
 | `signupUrl` / `contactEmail` | config.js | |
+| `supportLinks` | config.js | `buyMeACoffeeUrl` / `upiId` / `upiQrImage` — empty hides CTA |
 | INR line items | `data/prices.json` | Unconfirmed |
 | Editions | `data/editions.json` | Unconfirmed |
 

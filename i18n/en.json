@@ -26,5 +26,14 @@
   "disclaimer": "Unofficial fan site. Not affiliated with or endorsed by Rockstar Games or Take-Two Interactive. Grand Theft Auto is a trademark of its respective owners.",
   "signup.title": "Launch reminders",
   "signup.help": "Optional launch reminders — available when the operator enables signup.",
-  "affiliate.disclosure": "Affiliate disclosure: we may earn a commission if you buy through links on this page, at no extra cost to you. Prices and edition names are placeholders until verified on official stores."
+  "affiliate.disclosure": "Affiliate disclosure: we may earn a commission if you buy through links on this page, at no extra cost to you. Prices and edition names are placeholders until verified on official stores.",
+  "support.cta": "Support this site",
+  "support.blurb": "Help cover hosting and updates",
+  "support.bmc": "Buy Me a Coffee",
+  "support.upi": "Pay via UPI",
+  "support.upiIdLabel": "UPI ID",
+  "support.copyUpi": "Copy UPI ID",
+  "support.copiedUpi": "UPI ID copied",
+  "support.close": "Close",
+  "support.dialogTitle": "Support this site"
 }

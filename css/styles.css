@@ -276,6 +276,74 @@ input[type="email"], input[type="text"], input[type="number"], input[type="time"
 .footer-nav a:hover { color: var(--pink); }
 .disclaimer { font-size: 0.85rem; color: var(--text-muted); max-width: 52rem; margin: 0; }
 
+.support-slot { margin-top: 0.75rem; }
+.support-slot.is-empty { display: none; }
+.support-inline {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.65rem 1rem;
+}
+.support-inline .support-blurb {
+  margin: 0; font-size: 0.9rem; color: var(--text-muted);
+}
+.footer-support {
+  margin: 0 0 1rem;
+  padding: 0.85rem 0 0;
+  border-top: 1px solid var(--border);
+}
+.btn-support {
+  background: transparent;
+  border-color: rgba(255, 138, 61, 0.45);
+  color: var(--orange);
+}
+.btn-support:hover {
+  border-color: var(--pink);
+  color: var(--pink);
+}
+
+.support-modal[hidden] { display: none !important; }
+.support-modal {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
+}
+.support-modal-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(6, 3, 12, 0.72);
+}
+.support-modal-dialog {
+  position: relative; z-index: 1;
+  width: min(100%, 400px);
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+}
+.support-modal-dialog h2 { margin-top: 0; font-size: 1.2rem; }
+.support-modal-actions { display: grid; gap: 0.65rem; margin: 1rem 0; }
+.support-upi-box {
+  margin-top: 0.5rem; padding: 0.85rem;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: rgba(8, 4, 14, 0.45);
+}
+.support-upi-box img {
+  width: min(100%, 220px); height: auto; margin: 0.75rem auto;
+  border-radius: var(--radius-sm); background: #fff;
+}
+.support-upi-id {
+  font-family: ui-monospace, Consolas, monospace;
+  word-break: break-all;
+  color: var(--orange);
+  font-weight: 700;
+}
+.support-modal-close {
+  position: absolute; top: 0.65rem; right: 0.65rem;
+  width: 40px; height: 40px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text); cursor: pointer; font-size: 1.25rem; line-height: 1;
+}
+
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;
@@ -287,7 +355,7 @@ input[type="email"], input[type="text"], input[type="number"], input[type="time"
 .tips li { margin-bottom: 0.4rem; }
 
 @media print {
-  .site-header, .site-footer, .ad-slot, .share-bar, .nav-toggle, .skip-link { display: none !important; }
+  .site-header, .site-footer, .ad-slot, .share-bar, .support-slot, .support-modal, .nav-toggle, .skip-link { display: none !important; }
   body { background: #fff; color: #111; }
   .hero-panel, .form-box, .result-box, .timeline li { box-shadow: none; border-color: #ccc; background: #fff; }
   .big, .logo-text, .countdown-value { color: #111 !important; -webkit-text-fill-color: #111; }

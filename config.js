@@ -48,6 +48,14 @@ window.GTA6_CONFIG = {
   /* TODO: your real email */
   contactEmail: "hello@example.com",
 
+  /* Support this site — leave empty to hide the CTA everywhere.
+     TODO: set buyMeACoffeeUrl and/or upiId (+ optional upiQrImage path) */
+  supportLinks: {
+    buyMeACoffeeUrl: "",
+    upiId: "",
+    upiQrImage: ""
+  },
+
   currency: "INR",
   currencySymbol: "₹",
   i18nLocale: "en"

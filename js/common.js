@@ -85,6 +85,282 @@
     }
   }
 
+  function trimStr(v) {
+    return v == null ? "" : String(v).trim();
+  }
+
+  function getSupportLinks() {
+    return cfg.supportLinks || {};
+  }
+
+  /** Show CTA when BMC URL or UPI ID is set (QR is optional with UPI). */
+  function hasSupportLinks() {
+    var s = getSupportLinks();
+    return !!(trimStr(s.buyMeACoffeeUrl) || trimStr(s.upiId));
+  }
+
+  var supportModalEl = null;
+  var supportLastFocus = null;
+
+  function ensureSupportModal() {
+    if (supportModalEl) return supportModalEl;
+    var wrap = document.createElement("div");
+    wrap.className = "support-modal";
+    wrap.id = "support-modal";
+    wrap.setAttribute("hidden", "");
+    wrap.setAttribute("role", "presentation");
+    wrap.innerHTML =
+      '<div class="support-modal-backdrop" data-support-close tabindex="-1"></div>' +
+      '<div class="support-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="support-modal-title" tabindex="-1">' +
+      '<button type="button" class="support-modal-close" data-support-close aria-label="' +
+      t("support.close", "Close") +
+      '">×</button>' +
+      '<h2 id="support-modal-title">' +
+      t("support.dialogTitle", "Support this site") +
+      "</h2>" +
+      '<p class="muted">' +
+      t("support.blurb", "Help cover hosting and updates") +
+      "</p>" +
+      '<div class="support-modal-actions" id="support-modal-actions"></div>' +
+      '<div class="support-upi-box" id="support-upi-box" hidden></div>' +
+      '<p class="share-status" id="support-modal-status" aria-live="polite"></p>' +
+      "</div>";
+    document.body.appendChild(wrap);
+    supportModalEl = wrap;
+
+    wrap.addEventListener("click", function (e) {
+      if (e.target && e.target.getAttribute("data-support-close") != null) {
+        closeSupportModal();
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (!supportModalEl || supportModalEl.hasAttribute("hidden")) return;
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closeSupportModal();
+        return;
+      }
+      if (e.key === "Tab") {
+        trapFocus(supportModalEl.querySelector(".support-modal-dialog"), e);
+      }
+    });
+    return wrap;
+  }
+
+  function trapFocus(dialog, e) {
+    var focusables = qsa(
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+      dialog
+    ).filter(function (el) {
+      return !el.hasAttribute("hidden") && el.offsetParent !== null;
+    });
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  function fillSupportModalBody() {
+    var s = getSupportLinks();
+    var bmc = trimStr(s.buyMeACoffeeUrl);
+    var upi = trimStr(s.upiId);
+    var qr = trimStr(s.upiQrImage);
+    var actions = qs("#support-modal-actions");
+    var upiBox = qs("#support-upi-box");
+    if (!actions || !upiBox) return;
+
+    actions.innerHTML = "";
+    if (bmc) {
+      var a = document.createElement("a");
+      a.className = "btn btn-primary";
+      a.href = bmc;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.textContent = t("support.bmc", "Buy Me a Coffee");
+      actions.appendChild(a);
+    }
+
+    if (upi) {
+      upiBox.hidden = false;
+      var qrHtml = qr
+        ? '<img src="' +
+          qr.replace(/"/g, "") +
+          '" alt="UPI QR code" width="220" height="220" loading="lazy">'
+        : "";
+      upiBox.innerHTML =
+        "<p class=\"mb-0\"><strong>" +
+        t("support.upi", "Pay via UPI") +
+        "</strong></p>" +
+        qrHtml +
+        '<p class="help-text mt-0">' +
+        t("support.upiIdLabel", "UPI ID") +
+        '</p><p class="support-upi-id" id="support-upi-id-text">' +
+        upi.replace(/</g, "&lt;") +
+        '</p><button type="button" class="btn btn-secondary" id="support-copy-upi">' +
+        t("support.copyUpi", "Copy UPI ID") +
+        "</button>";
+      var copyBtn = qs("#support-copy-upi", upiBox);
+      if (copyBtn) {
+        copyBtn.addEventListener("click", function () {
+          copyText(upi, qs("#support-modal-status"), t("support.copiedUpi", "UPI ID copied"));
+        });
+      }
+    } else {
+      upiBox.hidden = true;
+      upiBox.innerHTML = "";
+    }
+  }
+
+  function copyText(text, statusEl, okMsg) {
+    function done() {
+      if (statusEl) statusEl.textContent = okMsg;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(function () {
+        fallbackCopy(text, done);
+      });
+    } else {
+      fallbackCopy(text, done);
+    }
+  }
+
+  function fallbackCopy(text, done) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand("copy");
+      if (done) done();
+    } catch (err) {
+      /* ignore */
+    }
+    document.body.removeChild(ta);
+  }
+
+  function openSupportModal(trigger) {
+    ensureSupportModal();
+    fillSupportModalBody();
+    supportLastFocus = trigger || document.activeElement;
+    supportModalEl.removeAttribute("hidden");
+    document.body.style.overflow = "hidden";
+    var dialog = qs(".support-modal-dialog", supportModalEl);
+    var firstBtn = qs("a.btn, button:not(.support-modal-close)", dialog) || qs(".support-modal-close", dialog);
+    if (firstBtn) firstBtn.focus();
+    else if (dialog) dialog.focus();
+  }
+
+  function closeSupportModal() {
+    if (!supportModalEl || supportModalEl.hasAttribute("hidden")) return;
+    supportModalEl.setAttribute("hidden", "");
+    document.body.style.overflow = "";
+    if (supportLastFocus && supportLastFocus.focus) supportLastFocus.focus();
+    supportLastFocus = null;
+  }
+
+  function makeSupportButton() {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn btn-support";
+    btn.textContent = t("support.cta", "Support this site");
+    btn.setAttribute("aria-haspopup", "dialog");
+    btn.addEventListener("click", function () {
+      var s = getSupportLinks();
+      var bmc = trimStr(s.buyMeACoffeeUrl);
+      var upi = trimStr(s.upiId);
+      /* BMC only → open external link; otherwise modal (UPI / both) */
+      if (bmc && !upi) {
+        var link = document.createElement("a");
+        link.href = bmc;
+        link.target = "_blank";
+        link.rel = "noopener";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        return;
+      }
+      openSupportModal(btn);
+    });
+    return btn;
+  }
+
+  function fillSupportSlot(slot, opts) {
+    if (!slot) return;
+    if (!hasSupportLinks()) {
+      slot.innerHTML = "";
+      slot.classList.add("is-empty");
+      slot.hidden = true;
+      return;
+    }
+    slot.hidden = false;
+    slot.classList.remove("is-empty");
+    var compact = opts && opts.compact;
+    slot.innerHTML = "";
+    var wrap = document.createElement("div");
+    wrap.className = "support-inline";
+    if (!compact) {
+      var blurb = document.createElement("p");
+      blurb.className = "support-blurb";
+      blurb.textContent = t("support.blurb", "Help cover hosting and updates");
+      wrap.appendChild(blurb);
+    }
+    wrap.appendChild(makeSupportButton());
+    slot.appendChild(wrap);
+  }
+
+  function ensureResultSupportSlots() {
+    /* Prefer one slot under each tool share bar (result CTAs). */
+    qsa(".share-bar").forEach(function (bar) {
+      var parent = bar.parentNode;
+      if (!parent) return;
+      if (parent.querySelector("[data-support-slot=result]")) return;
+      var slot = document.createElement("div");
+      slot.setAttribute("data-support-slot", "result");
+      slot.className = "support-slot support-slot-result";
+      if (bar.nextSibling) parent.insertBefore(slot, bar.nextSibling);
+      else parent.appendChild(slot);
+    });
+    /* Result boxes without a share-bar sibling still get a slot */
+    qsa(".result-box").forEach(function (box) {
+      if (box.querySelector("[data-support-slot]")) return;
+      if (box.querySelector(".share-bar")) return;
+      var slot = document.createElement("div");
+      slot.setAttribute("data-support-slot", "result");
+      slot.className = "support-slot support-slot-result";
+      box.appendChild(slot);
+    });
+  }
+
+  function ensureFooterSupportSlot() {
+    qsa(".footer-inner").forEach(function (inner) {
+      if (inner.querySelector("[data-support-slot=footer]")) return;
+      var slot = document.createElement("div");
+      slot.setAttribute("data-support-slot", "footer");
+      slot.className = "support-slot footer-support";
+      var disc = inner.querySelector(".disclaimer");
+      if (disc) inner.insertBefore(slot, disc);
+      else inner.appendChild(slot);
+    });
+  }
+
+  function mountSupportUI() {
+    ensureFooterSupportSlot();
+    ensureResultSupportSlots();
+    qsa("[data-support-slot]").forEach(function (slot) {
+      fillSupportSlot(slot, { compact: slot.getAttribute("data-support-slot") === "result" });
+    });
+  }
+
   function initSignup() {
     var form = qs("#signup-form");
     if (!form) return;
@@ -371,6 +647,9 @@
     loadI18n: loadI18n,
     shareResult: shareResult,
     wireShareButtons: wireShareButtons,
+    hasSupportLinks: hasSupportLinks,
+    mountSupportUI: mountSupportUI,
+    openSupportModal: openSupportModal,
     getLaunchDate: getLaunchDate,
     localMidnightAsUtc: localMidnightAsUtc,
     detectTimezone: detectTimezone,
@@ -389,6 +668,7 @@
     initSignup();
     loadI18n().then(function () {
       startHomeCountdown();
+      mountSupportUI();
     });
   });
 })();
