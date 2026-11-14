@@ -1,50 +1,54 @@
 /**
- * GTA 6 Hub — site configuration
- * Edit this file to update launch date, monetization IDs, and affiliate links.
- * Do not invent Rockstar-confirmed facts; mark unknowns clearly.
+ * UnlockIST — GTA 6 India Launch Hub configuration
+ * Edit freely. Do not invent Rockstar-confirmed facts.
  */
 window.GTA6_CONFIG = {
-  /* Site identity */
-  siteName: "GTA 6 Hub",
-  siteTagline: "Unofficial fan utilities for launch day",
+  /* Brand: "UnlockIST" | "Ready for VI" | "GTA6 Prep India" */
+  siteName: "UnlockIST",
+  siteTagline: "GTA 6 India launch prep — IST, ₹, practical tools",
   /* TODO: replace with your live domain (no trailing slash) */
   baseUrl: "https://example.com",
 
-  /* Launch target — Rockstar has announced Thursday, 19 Nov 2026 on PS5 & Xbox Series X|S.
+  /* Announced calendar date: Thu 19 Nov 2026, PS5 & Xbox Series X|S.
      Exact worldwide unlock clock time is NOT officially confirmed. */
   launchDate: "2026-11-19",
-  /* "local-midnight" = treat launch as 00:00 in the visitor's selected timezone
-     "fixed-utc" = use launchDateUtc below as a single global instant */
+  /* "local-midnight" (default) or "fixed-utc" */
   unlockMode: "local-midnight",
   /* Used only when unlockMode === "fixed-utc". TODO: verify once Rockstar confirms. */
   launchDateUtc: "2026-11-19T00:00:00Z",
-
-  /* Show the "Unlock time not officially confirmed" banner. Set false after Rockstar confirms. */
   showUnlockUnconfirmedNotice: true,
-
-  /* Default timezone hint for India-first audience (auto-detect still preferred) */
   defaultTimezone: "Asia/Kolkata",
 
-  /* Monetization — leave empty until accounts are ready */
-  /* TODO: paste your AdSense client id, e.g. "ca-pub-xxxxxxxxxxxxxxxx" */
+  /* Download calculator defaults — install size unconfirmed */
+  /* TODO: verify install size (GB) on official store */
+  defaultInstallSizeGb: 150,
+  defaultDownloadEfficiency: 0.8,
+  defaultSpeedMbps: 50,
+
+  /* Monetization */
+  /* TODO: AdSense client id e.g. "ca-pub-xxxxxxxxxxxxxxxx" */
   adsenseClientId: "",
-  /* TODO: paste your analytics measurement id if used */
+  /* TODO: analytics measurement id */
   analyticsId: "",
 
-  /* TODO: replace placeholders with real affiliate / store URLs */
+  /* TODO: real affiliate / store URLs (India-friendly where possible) */
   affiliateLinks: {
     standard: "https://example.com/affiliate/standard-TODO",
     deluxe: "https://example.com/affiliate/deluxe-TODO",
     collector: "https://example.com/affiliate/collector-TODO",
     digital: "https://example.com/affiliate/digital-TODO",
-    physical: "https://example.com/affiliate/physical-TODO"
+    physical: "https://example.com/affiliate/physical-TODO",
+    game: "https://example.com/affiliate/game-TODO"
   },
 
-  /* Signup form — placeholder posts nowhere useful until you set a real endpoint */
-  /* TODO: Zapier / Formspree / Google Form / WhatsApp link */
+  /* TODO: Formspree / Google Form / WhatsApp link */
   signupUrl: "https://example.com/signup-TODO",
-  signupMethod: "GET", /* or "POST" depending on your form provider */
+  signupMethod: "GET",
 
-  /* Contact (shown on about / privacy) */
-  contactEmail: "hello@example.com" /* TODO: your real email */
+  /* TODO: your real email */
+  contactEmail: "hello@example.com",
+
+  currency: "INR",
+  currencySymbol: "₹",
+  i18nLocale: "en"
 };

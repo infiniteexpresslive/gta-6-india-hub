@@ -1,62 +1,57 @@
-# GTA 6 Hub
+# UnlockIST — GTA 6 India Launch Hub
 
-Unofficial fan utility site: launch countdown, timezone unlock converter, edition quiz, checklist, and console setup check.
+India-first unofficial fan utilities: **IST countdown**, **download time**, **cost in ₹**, **launch planner**, **edition quiz**.
 
 **Not affiliated with or endorsed by Rockstar Games or Take-Two Interactive.** Grand Theft Auto is a trademark of its respective owners.
 
 ## Stack
 
-- Plain HTML / CSS / vanilla JS
-- No framework, no build step, no backend
-- Editable config: `config.js`
-- Placeholder facts: `data/*.json`
+- Plain HTML / CSS / vanilla JS (no build step)
+- Strings: `i18n/en.json` (ready for `ta` / `hi` later)
+- Facts: `config.js` + `data/*.json`
+
+Brand placeholder in `config.js` → `siteName`: `UnlockIST` | `Ready for VI` | `GTA6 Prep India`.
 
 ## Open locally
 
-JSON fetch (checklist, quiz, setup table) needs HTTP — `file://` will fail those pages.
+JSON / i18n fetch needs HTTP:
 
 ```bash
-# Python
+cd "H:/DEV/GTA 6 HUB"
 python -m http.server 8080
-
-# Node
-npx --yes serve -p 8080
 ```
 
-Then open `http://localhost:8080`.
+Open `http://localhost:8080`.
 
-## Deploy (Vercel / Netlify)
+## Deploy
 
-1. Set `baseUrl` in `config.js` and replace `https://example.com` in HTML canonical/OG tags, `sitemap.xml`, and `robots.txt`.
-2. Drag this folder into the Vercel or Netlify dashboard, or connect a Git repo with publish directory = site root.
-3. Point Netlify/Vercel 404 to `404.html` if your host does not auto-detect it.
-4. Fill AdSense / analytics / affiliate / signup fields when ready.
+1. Replace `https://example.com` in `config.js` `baseUrl`, HTML canonical/OG tags, `sitemap.xml`, `robots.txt`.
+2. Drag this folder to Vercel or Netlify (publish = site root).
+3. Map 404 → `404.html` if the host does not auto-detect it.
+4. Fill AdSense / analytics / affiliate / signup when ready.
 
-## Configure before launch
+## Configure
 
-| Field | File | Notes |
-|-------|------|--------|
-| `baseUrl` | `config.js` | Live domain, no trailing slash |
-| `launchDate` / `unlockMode` / `launchDateUtc` | `config.js` | Unlock clock still unconfirmed |
-| `showUnlockUnconfirmedNotice` | `config.js` | Set `false` after Rockstar confirms |
-| `adsenseClientId` | `config.js` | Empty = ad slots hidden |
-| `analyticsId` | `config.js` | Optional |
-| `affiliateLinks` | `config.js` | Replace example URLs |
-| `signupUrl` | `config.js` | Formspree / WhatsApp / etc. |
-| `contactEmail` | `config.js` | About / privacy |
-| Editions & prices | `data/editions.json` | Marked unconfirmed |
-| Checklist copy | `data/checklist.json` | Edit freely |
-| Console / GTA 6 tech rows | `data/consoles.json` | TODO verify |
+| Field | Where | Notes |
+|-------|--------|--------|
+| `siteName` | config.js | Brand string |
+| `baseUrl` | config.js | Live domain |
+| `launchDate` / `unlockMode` / `launchDateUtc` | config.js | Unlock clock unconfirmed |
+| `defaultInstallSizeGb` | config.js | Download calc — TODO verify |
+| `adsenseClientId` / `analyticsId` | config.js | Empty = ads hidden |
+| `affiliateLinks` | config.js | Replace example URLs |
+| `signupUrl` / `contactEmail` | config.js | |
+| INR line items | `data/prices.json` | Unconfirmed |
+| Editions | `data/editions.json` | Unconfirmed |
 
 ## Pages
 
-- `index.html` — home + live countdown + tool cards + signup
-- `countdown.html` — countdown, TZ converter, city list, FAQ JSON-LD
-- `edition-quiz.html` — quiz → affiliate CTA
-- `checklist.html` — localStorage progress
-- `setup-check.html` — PS5 / Series X / Series S table
-- `privacy.html` / `about.html` / `404.html`
-
-## License / content
-
-Original site code for this fan project. Do not add Rockstar logos, trailers, screenshots, fonts, or music.
+| File | Purpose |
+|------|---------|
+| `index.html` | Home + countdown |
+| `countdown.html` | IST unlock converter |
+| `download-calculator.html` | Mbps → time |
+| `cost-calculator.html` | ₹ checklist |
+| `launch-planner.html` | Day timeline |
+| `edition-quiz.html` | Edition scores |
+| `privacy.html` / `about.html` / `404.html` | Legal / meta |

@@ -1,4 +1,4 @@
-# GTA 6 Hub — TODO: replace example.com with your live domain
+# UnlockIST — TODO: replace example.com with your live domain
 User-agent: *
 Allow: /
 

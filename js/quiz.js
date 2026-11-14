@@ -1,30 +1,22 @@
-/**
- * Edition quiz — scores from data/editions.json; affiliate CTA from config.
- */
 (function () {
   "use strict";
-
   var G = window.GTA6;
   if (!G) return;
-
   var cfg = G.config || {};
-  var quizData = null;
+  var lastText = "";
 
   function renderQuestions(data) {
     var form = G.qs("#quiz-form");
     if (!form) return;
     form.innerHTML = "";
-
     (data.questions || []).forEach(function (q, index) {
       var fieldset = document.createElement("fieldset");
       fieldset.className = "quiz-q card";
       var legend = document.createElement("legend");
       legend.innerHTML = "<strong>Q" + (index + 1) + ".</strong> " + q.text;
       fieldset.appendChild(legend);
-
       var wrap = document.createElement("div");
       wrap.className = "quiz-options";
-
       (q.options || []).forEach(function (opt) {
         var label = document.createElement("label");
         label.className = "quiz-option";
@@ -38,16 +30,14 @@
           "</span>";
         wrap.appendChild(label);
       });
-
       fieldset.appendChild(wrap);
       form.appendChild(fieldset);
     });
-
     var actions = document.createElement("div");
     actions.className = "btn-row";
     actions.innerHTML =
       '<button class="btn btn-primary" type="submit">See recommendation</button>' +
-      '<button class="btn btn-ghost" type="reset" id="quiz-reset">Reset</button>';
+      '<button class="btn btn-ghost" type="reset">Reset</button>';
     form.appendChild(actions);
   }
 
@@ -56,7 +46,6 @@
     Object.keys(data.editions || {}).forEach(function (k) {
       scores[k] = 0;
     });
-
     (data.questions || []).forEach(function (q) {
       var checked = form.querySelector('input[name="' + q.id + '"]:checked');
       if (!checked) return;
@@ -68,7 +57,6 @@
         scores[editionId] = (scores[editionId] || 0) + opt.scores[editionId];
       });
     });
-
     var bestId = null;
     var bestScore = -1;
     Object.keys(scores).forEach(function (id) {
@@ -77,50 +65,50 @@
         bestId = id;
       }
     });
-    return { bestId: bestId, scores: scores };
+    return bestId;
   }
 
   function showResult(data, bestId) {
     var panel = G.qs("#quiz-result");
     if (!panel) return;
     var edition = (data.editions || {})[bestId];
-    if (!edition) {
-      panel.classList.remove("is-visible");
-      return;
-    }
-
-    var affiliateKey = edition.affiliateKey || bestId;
+    if (!edition) return;
     var url =
-      (cfg.affiliateLinks && cfg.affiliateLinks[affiliateKey]) ||
+      (cfg.affiliateLinks && cfg.affiliateLinks[edition.affiliateKey || bestId]) ||
       (cfg.affiliateLinks && cfg.affiliateLinks.standard) ||
       "#";
-
     var badge = edition.unconfirmed
-      ? '<span class="badge">unconfirmed</span>'
-      : '<span class="badge badge-ok">listed</span>';
-
+      ? '<span class="badge">' + G.t("badge.unconfirmed", "unconfirmed") + "</span>"
+      : "";
     panel.innerHTML =
-      '<div class="card">' +
-      "<h3>Suggested: " +
+      '<div class="card"><h3>Suggested: ' +
       edition.name +
       " " +
       badge +
-      "</h3>" +
-      "<p>" +
+      "</h3><p>" +
       edition.summary +
-      "</p>" +
-      '<p><strong>Price:</strong> ' +
+      "</p><p><strong>Price:</strong> " +
       (edition.priceHint || "TODO: verify") +
-      "</p>" +
-      '<div class="btn-row">' +
+      '</p><div class="btn-row">' +
       '<a class="btn btn-primary" href="' +
       url +
       '" rel="sponsored noopener" target="_blank">Check price</a>' +
-      "</div>" +
-      '<p class="disclosure">Affiliate disclosure: we may earn a commission if you buy through links on this page, at no extra cost to you. Edition names and prices are placeholders until verified on official stores.</p>' +
-      "</div>";
-
+      '<button type="button" class="btn btn-ghost" data-share>Share result</button>' +
+      '<button type="button" class="btn btn-secondary" data-copy>Copy</button>' +
+      '</div><p class="disclosure" data-i18n="affiliate.disclosure">' +
+      G.t("affiliate.disclosure") +
+      '</p><p class="share-status" id="share-status" aria-live="polite"></p></div>';
     panel.classList.add("is-visible");
+    lastText =
+      (cfg.siteName || "UnlockIST") +
+      " edition quiz: " +
+      edition.name +
+      " (" +
+      (edition.priceHint || "price TODO") +
+      "). Unconfirmed — verify official stores.";
+    G.wireShareButtons(function () {
+      return { title: cfg.siteName || "UnlockIST", text: lastText, url: location.href };
+    });
     panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
@@ -131,14 +119,12 @@
         return r.json();
       })
       .then(function (data) {
-        quizData = data;
         renderQuestions(data);
         var form = G.qs("#quiz-form");
         if (!form) return;
         form.addEventListener("submit", function (e) {
           e.preventDefault();
-          var result = scoreAnswers(data, form);
-          showResult(data, result.bestId);
+          showResult(data, scoreAnswers(data, form));
         });
         form.addEventListener("reset", function () {
           var panel = G.qs("#quiz-result");
@@ -146,13 +132,13 @@
             panel.classList.remove("is-visible");
             panel.innerHTML = "";
           }
+          lastText = "";
         });
       })
       .catch(function () {
         var form = G.qs("#quiz-form");
         if (form) {
-          form.innerHTML =
-            '<p class="notice">Could not load <code>data/editions.json</code>. Serve over HTTP so fetch works.</p>';
+          form.innerHTML = '<p class="notice">Could not load data/editions.json. Serve over HTTP.</p>';
         }
       });
   });

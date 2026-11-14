@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Which GTA 6 Edition to Buy? — Quick Quiz</title>
-  <meta name="description" content="Short quiz to narrow which GTA 6 edition to buy. Recommendations use placeholder edition data — verify prices on official stores. Unofficial fan tool.">
+  <title>Which GTA 6 Edition to Buy in India? — UnlockIST</title>
+  <meta name="description" content="Short quiz to narrow which GTA 6 edition to buy. ₹ prices and edition names are unconfirmed placeholders — verify official Indian stores.">
   <link rel="canonical" href="https://example.com/edition-quiz.html">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Which GTA 6 Edition to Buy?">
-  <meta property="og:description" content="Answer a few questions to get a placeholder edition suggestion and affiliate price check link.">
+  <meta property="og:description" content="India-friendly edition quiz with unconfirmed ₹ hints and affiliate check link.">
   <meta property="og:url" content="https://example.com/edition-quiz.html">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Which GTA 6 Edition to Buy?">
-  <meta name="twitter:description" content="Quick edition quiz with unconfirmed price placeholders. Unofficial.">
+  <meta name="twitter:title" content="Which GTA 6 Edition to Buy? — UnlockIST">
+  <meta name="twitter:description" content="Quick edition quiz. Prices unconfirmed.">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -20,24 +20,18 @@
   <header class="site-header">
     <div class="header-inner">
       <a class="logo" href="index.html">
-        <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
-          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff4d9a"/><stop offset="100%" stop-color="#ff8a3d"/></linearGradient></defs>
-          <rect width="40" height="40" rx="10" fill="#1a0f28"/>
-          <path d="M8 26 L20 8 L32 26 Z" fill="none" stroke="url(#lg)" stroke-width="2.5"/>
-          <circle cx="20" cy="22" r="3" fill="#a855f7"/>
-        </svg>
-        <span class="logo-text">GTA 6 Hub</span>
+        <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff4d9a"/><stop offset="100%" stop-color="#ff8a3d"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="#1a0f28"/><path d="M8 26 L20 8 L32 26 Z" fill="none" stroke="url(#lg)" stroke-width="2.5"/><circle cx="20" cy="22" r="3" fill="#a855f7"/></svg>
+        <span class="logo-text" data-brand>UnlockIST</span>
       </a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
-        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-      </button>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg></button>
       <nav class="site-nav" id="site-nav" aria-label="Primary">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="countdown.html">Countdown</a></li>
+          <li><a href="download-calculator.html">Download time</a></li>
+          <li><a href="cost-calculator.html">Cost in ₹</a></li>
+          <li><a href="launch-planner.html">Launch planner</a></li>
           <li><a href="edition-quiz.html">Edition quiz</a></li>
-          <li><a href="checklist.html">Checklist</a></li>
-          <li><a href="setup-check.html">Setup check</a></li>
           <li><a href="about.html">About</a></li>
         </ul>
       </nav>
@@ -46,23 +40,19 @@
 
   <main id="main" class="container">
     <p class="eyebrow">Tool</p>
-    <h1>Which edition to buy?</h1>
-    <p class="lede">Answer 4–6 short questions. We score placeholder editions from <code>data/editions.json</code> — every price and edition name is marked unconfirmed until you verify official stores.</p>
+    <h1 data-i18n="quiz.title">Which edition to buy?</h1>
+    <p class="lede">Answer a few questions. Scoring uses placeholder editions in <code>data/editions.json</code> — every ₹ price stays unconfirmed.</p>
 
-    <div class="notice">
-      <strong>Unconfirmed data.</strong> Rockstar’s final edition lineup, contents, and INR/USD prices must be checked on official channels. This quiz helps you think about budget and extras; it is not a purchase order.
-    </div>
-
-    <div class="ad-slot" data-ad="quiz" aria-hidden="true">Ad slot</div>
+    <div class="notice"><strong>Unconfirmed data.</strong> Final edition lineup and Indian store prices must be checked officially. This quiz is a decision aid, not a purchase order.</div>
+    <div class="ad-slot" aria-hidden="true">Ad slot</div>
 
     <form id="quiz-form" novalidate></form>
     <div id="quiz-result" class="quiz-result" aria-live="polite"></div>
 
     <section class="section prose" aria-labelledby="quiz-help">
       <h2 id="quiz-help">How this quiz thinks</h2>
-      <p>“Which edition to buy” is one of the highest-intent queries around a GTA launch. People usually trade off three things: lowest price, digital extras, and physical collector items. Our scoring weights those preferences using editable JSON — not scraped store pages — so you can update names the hour Rockstar publishes them.</p>
-      <p>The <strong>Check price</strong> button uses affiliate URLs from <code>config.js</code> with <code>rel="sponsored noopener"</code>. Replace the placeholder links before promoting the page, and keep the disclosure visible. If a collector edition never materializes, remove it from <code>editions.json</code> so the quiz cannot recommend vaporware.</p>
-      <p>For platform fit (PS5 vs Series X vs Series S), use the <a href="setup-check.html">setup check</a> table. For day-one logistics, open the <a href="checklist.html">launch checklist</a>.</p>
+      <p>“Which edition to buy” traffic is high-intent. Most players trade off lowest ₹ price, digital extras, and physical collector items. UnlockIST scores those preferences from editable JSON — not scraped store pages — so you can rename editions the hour Rockstar publishes them for India.</p>
+      <p>The Check price button uses affiliate URLs from <code>config.js</code> with <code>rel="sponsored noopener"</code>. Replace placeholders before promoting. If a collector SKU never lands in India, remove it from JSON so the quiz cannot recommend vaporware. For a full ₹ basket (Plus, data, accessories), open the <a href="cost-calculator.html">cost calculator</a>.</p>
     </section>
   </main>
 
@@ -73,10 +63,9 @@
         <a href="about.html">About</a>
         <a href="index.html">Home</a>
       </nav>
-      <p class="disclaimer">Unofficial fan site. Not affiliated with or endorsed by Rockstar Games or Take-Two Interactive. Grand Theft Auto is a trademark of its respective owners.</p>
+      <p class="disclaimer" data-disclaimer>Unofficial fan site. Not affiliated with or endorsed by Rockstar Games or Take-Two Interactive. Grand Theft Auto is a trademark of its respective owners.</p>
     </div>
   </footer>
-
   <script src="config.js"></script>
   <script src="js/common.js"></script>
   <script src="js/quiz.js"></script>

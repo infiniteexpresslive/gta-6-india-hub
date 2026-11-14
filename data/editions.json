@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "note": "PLACEHOLDER DATA — not official Rockstar edition names, prices, or contents.",
-    "todo": "TODO: verify on official source (Rockstar / platform store pages) before launch."
+    "note": "PLACEHOLDER edition data — not official Rockstar names, prices, or contents.",
+    "todo": "TODO: verify on official source (Rockstar / PS Store India / Microsoft Store India)."
   },
   "questions": [
     {
@@ -15,11 +15,11 @@
     },
     {
       "id": "budget",
-      "text": "What's your comfortable spend band?",
+      "text": "What's your comfortable spend in ₹?",
       "options": [
-        { "id": "low", "label": "Keep it affordable", "scores": { "standard": 3 } },
-        { "id": "mid", "label": "Happy to pay a bit more for extras", "scores": { "deluxe": 3, "standard": 1 } },
-        { "id": "high", "label": "Want the fullest package / collectibles", "scores": { "collector": 3, "deluxe": 1 } }
+        { "id": "low", "label": "Keep it affordable — base game only", "scores": { "standard": 3 } },
+        { "id": "mid", "label": "Okay paying a bit more for extras", "scores": { "deluxe": 3, "standard": 1 } },
+        { "id": "high", "label": "Want the fullest / collector-style package", "scores": { "collector": 3, "deluxe": 1 } }
       ]
     },
     {
@@ -33,7 +33,7 @@
     },
     {
       "id": "extras",
-      "text": "Do bonus content or early access matter to you?",
+      "text": "Do bonus content or early unlocks matter?",
       "options": [
         { "id": "must", "label": "Yes — I want extras if offered", "scores": { "deluxe": 3, "collector": 2 } },
         { "id": "nice", "label": "Nice to have, not required", "scores": { "deluxe": 1, "standard": 1 } },
@@ -44,18 +44,18 @@
       "id": "shelf",
       "text": "Are you a collector who likes display items?",
       "options": [
-        { "id": "yes", "label": "Yes — statues, steelbooks, art books interest me", "scores": { "collector": 4 } },
-        { "id": "maybe", "label": "Only if the price is reasonable", "scores": { "deluxe": 2, "collector": 1 } },
+        { "id": "yes", "label": "Yes — statues, steelbooks, art interest me", "scores": { "collector": 4 } },
+        { "id": "maybe", "label": "Only if the ₹ price is reasonable", "scores": { "deluxe": 2, "collector": 1 } },
         { "id": "no", "label": "No — gameplay only", "scores": { "standard": 2, "deluxe": 1 } }
       ]
     },
     {
       "id": "timing",
-      "text": "Will you play on day one?",
+      "text": "Will you play on day one in IST?",
       "options": [
-        { "id": "dayone", "label": "Absolutely — launch day", "scores": { "deluxe": 1, "standard": 1, "collector": 1 } },
+        { "id": "dayone", "label": "Absolutely — launch day / night", "scores": { "deluxe": 1, "standard": 1, "collector": 1 } },
         { "id": "soon", "label": "Within the first week or two", "scores": { "standard": 1, "deluxe": 1 } },
-        { "id": "later", "label": "I'll wait for reviews / a sale", "scores": { "standard": 3 } }
+        { "id": "later", "label": "I'll wait for reviews or a sale", "scores": { "standard": 3 } }
       ]
     }
   ],
@@ -64,24 +64,24 @@
       "id": "standard",
       "name": "Standard Edition",
       "unconfirmed": true,
-      "priceHint": "TODO: verify price on official store",
-      "summary": "Placeholder recommendation for players who mainly want the base game at the lowest typical price point. Edition name, contents, and price are unconfirmed — check the official Rockstar / platform store.",
+      "priceHint": "TODO: verify ₹ price on official Indian store",
+      "summary": "Best fit if you mainly want the base game at the lowest typical price. Edition name, contents, and INR price are unconfirmed — check PS Store India or Microsoft Store India.",
       "affiliateKey": "standard"
     },
     "deluxe": {
       "id": "deluxe",
       "name": "Deluxe / Premium-style Edition",
       "unconfirmed": true,
-      "priceHint": "TODO: verify price and official edition name",
-      "summary": "Placeholder for shoppers open to paying more for digital extras (if offered). Exact bonus content and naming are unconfirmed.",
+      "priceHint": "TODO: verify ₹ price and official edition name",
+      "summary": "For shoppers open to paying more for digital extras (if offered). Exact bonus content and naming are unconfirmed.",
       "affiliateKey": "deluxe"
     },
     "collector": {
       "id": "collector",
       "name": "Collector-style Edition",
       "unconfirmed": true,
-      "priceHint": "TODO: verify availability, contents, and price",
-      "summary": "Placeholder for collectors who want physical extras. Rockstar may or may not offer a collector package — confirm on official channels before buying from third parties.",
+      "priceHint": "TODO: verify availability, contents, and ₹ price in India",
+      "summary": "For collectors who want physical extras. Confirm on official channels before buying from third parties — India availability may differ.",
       "affiliateKey": "collector"
     }
   }
