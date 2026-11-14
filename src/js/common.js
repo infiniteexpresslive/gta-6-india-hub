@@ -305,7 +305,7 @@
     if (!qs('link[rel="apple-touch-icon"]')) {
       var apple = document.createElement("link");
       apple.rel = "apple-touch-icon";
-      apple.href = "assets/bmc/bmc-logo.png";
+      apple.href = "assets/unlockist-mark.png";
       document.head.appendChild(apple);
     }
   }
