@@ -64,7 +64,7 @@
       "id": "standard",
       "name": "Standard Edition",
       "unconfirmed": true,
-      "priceHint": "TODO: verify ₹ price on official Indian store",
+      "priceHint": "Unconfirmed — check official Indian stores for ₹ price",
       "summary": "Best fit if you mainly want the base game at the lowest typical price. Edition name, contents, and INR price are unconfirmed — check PS Store India or Microsoft Store India.",
       "affiliateKey": "standard"
     },
@@ -72,7 +72,7 @@
       "id": "deluxe",
       "name": "Deluxe / Premium-style Edition",
       "unconfirmed": true,
-      "priceHint": "TODO: verify ₹ price and official edition name",
+      "priceHint": "Unconfirmed — check official stores for ₹ price and edition name",
       "summary": "For shoppers open to paying more for digital extras (if offered). Exact bonus content and naming are unconfirmed.",
       "affiliateKey": "deluxe"
     },
@@ -80,7 +80,7 @@
       "id": "collector",
       "name": "Collector-style Edition",
       "unconfirmed": true,
-      "priceHint": "TODO: verify availability, contents, and ₹ price in India",
+      "priceHint": "Unconfirmed — check official channels for availability and ₹ price in India",
       "summary": "For collectors who want physical extras. Confirm on official channels before buying from third parties — India availability may differ.",
       "affiliateKey": "collector"
     }

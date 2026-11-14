@@ -94,7 +94,7 @@
       var email = emailInput ? emailInput.value.trim() : "";
       var url = cfg.signupUrl || "#";
       if (!url || url.indexOf("TODO") !== -1 || url.indexOf("example.com") !== -1) {
-        alert("Signup is not configured yet. Set signupUrl in config.js.");
+        alert("Signup is not available yet. Please check back later.");
         return;
       }
       if (cfg.signupMethod === "POST") {

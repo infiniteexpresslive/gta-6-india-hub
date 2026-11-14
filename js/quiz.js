@@ -88,7 +88,7 @@
       "</h3><p>" +
       edition.summary +
       "</p><p><strong>Price:</strong> " +
-      (edition.priceHint || "TODO: verify") +
+      (edition.priceHint || "Unconfirmed — check official stores") +
       '</p><div class="btn-row">' +
       '<a class="btn btn-primary" href="' +
       url +
@@ -104,7 +104,7 @@
       " edition quiz: " +
       edition.name +
       " (" +
-      (edition.priceHint || "price TODO") +
+      (edition.priceHint || "price unconfirmed") +
       "). Unconfirmed — verify official stores.";
     G.wireShareButtons(function () {
       return { title: cfg.siteName || "UnlockIST", text: lastText, url: location.href };
@@ -138,7 +138,7 @@
       .catch(function () {
         var form = G.qs("#quiz-form");
         if (form) {
-          form.innerHTML = '<p class="notice">Could not load data/editions.json. Serve over HTTP.</p>';
+          form.innerHTML = '<p class="notice">Could not load edition data. Please refresh or try again later.</p>';
         }
       });
   });

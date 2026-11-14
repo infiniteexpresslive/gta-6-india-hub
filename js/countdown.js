@@ -118,10 +118,10 @@
     if (modeEl) {
       modeEl.textContent =
         cfg.unlockMode === "fixed-utc"
-          ? "Mode: fixed UTC (" + (cfg.launchDateUtc || "") + ")."
-          : "Mode: local midnight on " +
+          ? "Using one shared unlock moment worldwide (until stores say otherwise)."
+          : "Using local midnight on " +
             (cfg.launchDate || "2026-11-19") +
-            " in the selected timezone (assumption until Rockstar confirms).";
+            " in your selected timezone as a planning assumption until Rockstar confirms.";
     }
 
     var select = G.qs("#timezone-select");

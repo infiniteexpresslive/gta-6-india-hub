@@ -111,7 +111,7 @@
         var root = G.qs("#cost-list");
         if (root) {
           root.innerHTML =
-            "<li>Could not load data/prices.json. Serve over HTTP.</li>";
+            "<li>Could not load price list. Please refresh or try again later.</li>";
         }
       });
     G.wireShareButtons(function () {
