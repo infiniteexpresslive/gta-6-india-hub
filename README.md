@@ -41,7 +41,8 @@ Open `http://localhost:8080`.
 | `adsenseClientId` / `analyticsId` | config.js | Empty = ads hidden |
 | `affiliateLinks` | config.js | Replace example URLs |
 | `signupUrl` / `contactEmail` | config.js | |
-| `supportLinks` | config.js | `buyMeACoffeeUrl` / `upiId` / `upiQrImage` — empty hides CTA |
+| `supportLinks.buyMeACoffeeUrl` | config.js | BMC page URL — empty hides all support UI |
+| `supportLinks.buyMeACoffeeQr` | config.js | Path to QR image (default `/assets/bmc-qr.png`) |
 | INR line items | `data/prices.json` | Unconfirmed |
 | Editions | `data/editions.json` | Unconfirmed |
 
@@ -55,4 +56,11 @@ Open `http://localhost:8080`.
 | `cost-calculator.html` | ₹ checklist |
 | `launch-planner.html` | Day timeline |
 | `edition-quiz.html` | Edition scores |
+| `support.html` | Buy Me a Coffee + QR |
 | `privacy.html` / `about.html` / `404.html` | Legal / meta |
+
+## Support (Buy Me a Coffee)
+
+1. Set `supportLinks.buyMeACoffeeUrl` in `config.js` (e.g. `https://buymeacoffee.com/gamedaytools`). Leave empty to hide every support CTA.
+2. Replace `assets/bmc-qr.png` with your QR image, and keep `supportLinks.buyMeACoffeeQr` pointing at it (default `/assets/bmc-qr.png`).
+3. No third-party BMC widgets — only a plain link + optional QR modal.

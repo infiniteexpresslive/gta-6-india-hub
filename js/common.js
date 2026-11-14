@@ -93,10 +93,17 @@
     return cfg.supportLinks || {};
   }
 
-  /** Show CTA when BMC URL or UPI ID is set (QR is optional with UPI). */
+  /** Show support UI when Buy Me a Coffee URL is set in config. */
   function hasSupportLinks() {
-    var s = getSupportLinks();
-    return !!(trimStr(s.buyMeACoffeeUrl) || trimStr(s.upiId));
+    return !!trimStr(getSupportLinks().buyMeACoffeeUrl);
+  }
+
+  function supportBmcUrl() {
+    return trimStr(getSupportLinks().buyMeACoffeeUrl);
+  }
+
+  function supportQrPath() {
+    return trimStr(getSupportLinks().buyMeACoffeeQr);
   }
 
   var supportModalEl = null;
@@ -118,11 +125,9 @@
       '<h2 id="support-modal-title">' +
       t("support.dialogTitle", "Support this site") +
       "</h2>" +
-      '<p class="muted">' +
-      t("support.blurb", "Help cover hosting and updates") +
-      "</p>" +
+      '<div class="support-qr-wrap" id="support-qr-wrap" hidden></div>' +
+      '<p class="support-url-text" id="support-url-text"></p>' +
       '<div class="support-modal-actions" id="support-modal-actions"></div>' +
-      '<div class="support-upi-box" id="support-upi-box" hidden></div>' +
       '<p class="share-status" id="support-modal-status" aria-live="polite"></p>' +
       "</div>";
     document.body.appendChild(wrap);
@@ -168,13 +173,35 @@
   }
 
   function fillSupportModalBody() {
-    var s = getSupportLinks();
-    var bmc = trimStr(s.buyMeACoffeeUrl);
-    var upi = trimStr(s.upiId);
-    var qr = trimStr(s.upiQrImage);
+    var bmc = supportBmcUrl();
+    var qr = supportQrPath();
+    var qrWrap = qs("#support-qr-wrap");
+    var urlEl = qs("#support-url-text");
     var actions = qs("#support-modal-actions");
-    var upiBox = qs("#support-upi-box");
-    if (!actions || !upiBox) return;
+    if (!actions) return;
+
+    if (urlEl) urlEl.textContent = bmc;
+
+    if (qrWrap) {
+      qrWrap.innerHTML = "";
+      if (qr) {
+        qrWrap.hidden = false;
+        var img = document.createElement("img");
+        img.src = qr;
+        img.alt = t("support.qrAlt", "Scan to support Game Day Tools");
+        img.width = 220;
+        img.height = 220;
+        img.loading = "lazy";
+        img.decoding = "async";
+        img.addEventListener("error", function () {
+          qrWrap.hidden = true;
+          qrWrap.innerHTML = "";
+        });
+        qrWrap.appendChild(img);
+      } else {
+        qrWrap.hidden = true;
+      }
+    }
 
     actions.innerHTML = "";
     if (bmc) {
@@ -185,36 +212,15 @@
       a.rel = "noopener";
       a.textContent = t("support.bmc", "Buy Me a Coffee");
       actions.appendChild(a);
-    }
 
-    if (upi) {
-      upiBox.hidden = false;
-      var qrHtml = qr
-        ? '<img src="' +
-          qr.replace(/"/g, "") +
-          '" alt="UPI QR code" width="220" height="220" loading="lazy">'
-        : "";
-      upiBox.innerHTML =
-        "<p class=\"mb-0\"><strong>" +
-        t("support.upi", "Pay via UPI") +
-        "</strong></p>" +
-        qrHtml +
-        '<p class="help-text mt-0">' +
-        t("support.upiIdLabel", "UPI ID") +
-        '</p><p class="support-upi-id" id="support-upi-id-text">' +
-        upi.replace(/</g, "&lt;") +
-        '</p><button type="button" class="btn btn-secondary" id="support-copy-upi">' +
-        t("support.copyUpi", "Copy UPI ID") +
-        "</button>";
-      var copyBtn = qs("#support-copy-upi", upiBox);
-      if (copyBtn) {
-        copyBtn.addEventListener("click", function () {
-          copyText(upi, qs("#support-modal-status"), t("support.copiedUpi", "UPI ID copied"));
-        });
-      }
-    } else {
-      upiBox.hidden = true;
-      upiBox.innerHTML = "";
+      var copyBtn = document.createElement("button");
+      copyBtn.type = "button";
+      copyBtn.className = "btn btn-secondary";
+      copyBtn.textContent = t("support.copyLink", "Copy link");
+      copyBtn.addEventListener("click", function () {
+        copyText(bmc, qs("#support-modal-status"), t("support.copiedLink", "Link copied"));
+      });
+      actions.appendChild(copyBtn);
     }
   }
 
@@ -249,13 +255,15 @@
   }
 
   function openSupportModal(trigger) {
+    if (!hasSupportLinks()) return;
     ensureSupportModal();
     fillSupportModalBody();
     supportLastFocus = trigger || document.activeElement;
     supportModalEl.removeAttribute("hidden");
     document.body.style.overflow = "hidden";
     var dialog = qs(".support-modal-dialog", supportModalEl);
-    var firstBtn = qs("a.btn, button:not(.support-modal-close)", dialog) || qs(".support-modal-close", dialog);
+    var firstBtn =
+      qs("a.btn, button:not(.support-modal-close)", dialog) || qs(".support-modal-close", dialog);
     if (firstBtn) firstBtn.focus();
     else if (dialog) dialog.focus();
   }
@@ -268,33 +276,29 @@
     supportLastFocus = null;
   }
 
-  function makeSupportButton() {
+  function makeBmcLink(className) {
+    var a = document.createElement("a");
+    a.className = className || "btn btn-support";
+    a.href = supportBmcUrl();
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.textContent = t("support.cta", "☕ Support this site");
+    return a;
+  }
+
+  function makeShowQrButton() {
     var btn = document.createElement("button");
     btn.type = "button";
-    btn.className = "btn btn-support";
-    btn.textContent = t("support.cta", "Support this site");
+    btn.className = "btn btn-ghost";
+    btn.textContent = t("support.showQr", "Show QR");
     btn.setAttribute("aria-haspopup", "dialog");
     btn.addEventListener("click", function () {
-      var s = getSupportLinks();
-      var bmc = trimStr(s.buyMeACoffeeUrl);
-      var upi = trimStr(s.upiId);
-      /* BMC only → open external link; otherwise modal (UPI / both) */
-      if (bmc && !upi) {
-        var link = document.createElement("a");
-        link.href = bmc;
-        link.target = "_blank";
-        link.rel = "noopener";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        return;
-      }
       openSupportModal(btn);
     });
     return btn;
   }
 
-  function fillSupportSlot(slot, opts) {
+  function fillSupportSlot(slot, kind) {
     if (!slot) return;
     if (!hasSupportLinks()) {
       slot.innerHTML = "";
@@ -304,22 +308,42 @@
     }
     slot.hidden = false;
     slot.classList.remove("is-empty");
-    var compact = opts && opts.compact;
     slot.innerHTML = "";
     var wrap = document.createElement("div");
     wrap.className = "support-inline";
-    if (!compact) {
+
+    if (kind === "result") {
       var blurb = document.createElement("p");
       blurb.className = "support-blurb";
-      blurb.textContent = t("support.blurb", "Help cover hosting and updates");
+      blurb.textContent = t(
+        "support.resultBlurb",
+        "Found this useful? Help cover hosting and new tools."
+      );
       wrap.appendChild(blurb);
+      var row = document.createElement("div");
+      row.className = "btn-row support-btn-row";
+      row.appendChild(makeBmcLink("btn btn-support"));
+      if (supportQrPath()) row.appendChild(makeShowQrButton());
+      wrap.appendChild(row);
+    } else if (kind === "footer") {
+      var footBlurb = document.createElement("p");
+      footBlurb.className = "support-blurb";
+      footBlurb.textContent = t("support.footerBlurb", "Help cover hosting and new tools");
+      wrap.appendChild(footBlurb);
+      var footRow = document.createElement("div");
+      footRow.className = "btn-row support-btn-row";
+      footRow.appendChild(makeBmcLink("btn btn-support"));
+      if (supportQrPath()) footRow.appendChild(makeShowQrButton());
+      wrap.appendChild(footRow);
+    } else {
+      wrap.appendChild(makeBmcLink("btn btn-support"));
+      if (supportQrPath()) wrap.appendChild(makeShowQrButton());
     }
-    wrap.appendChild(makeSupportButton());
+
     slot.appendChild(wrap);
   }
 
   function ensureResultSupportSlots() {
-    /* Prefer one slot under each tool share bar (result CTAs). */
     qsa(".share-bar").forEach(function (bar) {
       var parent = bar.parentNode;
       if (!parent) return;
@@ -330,7 +354,6 @@
       if (bar.nextSibling) parent.insertBefore(slot, bar.nextSibling);
       else parent.appendChild(slot);
     });
-    /* Result boxes without a share-bar sibling still get a slot */
     qsa(".result-box").forEach(function (box) {
       if (box.querySelector("[data-support-slot]")) return;
       if (box.querySelector(".share-bar")) return;
@@ -353,12 +376,66 @@
     });
   }
 
+  function mountSupportPage() {
+    var root = qs("#support-page");
+    if (!root) return;
+    if (!hasSupportLinks()) {
+      root.innerHTML =
+        '<p class="notice">Support links are not configured right now. Check back later.</p>';
+      return;
+    }
+    var bmc = supportBmcUrl();
+    var qr = supportQrPath();
+    var qrBlock = "";
+    if (qr) {
+      qrBlock =
+        '<div class="support-qr-wrap support-page-qr">' +
+        '<img id="support-page-qr-img" src="' +
+        qr.replace(/"/g, "") +
+        '" alt="' +
+        t("support.qrAlt", "Scan to support Game Day Tools") +
+        '" width="220" height="220" loading="lazy" decoding="async">' +
+        "</div>";
+    }
+    root.innerHTML =
+      qrBlock +
+      '<p class="support-url-text">' +
+      bmc.replace(/</g, "&lt;") +
+      "</p>" +
+      '<div class="btn-row">' +
+      '<a class="btn btn-primary" href="' +
+      bmc.replace(/"/g, "") +
+      '" target="_blank" rel="noopener">' +
+      t("support.bmc", "Buy Me a Coffee") +
+      "</a>" +
+      (qr
+        ? '<button type="button" class="btn btn-ghost" id="support-page-show-qr">' +
+          t("support.showQr", "Show QR") +
+          "</button>"
+        : "") +
+      "</div>";
+    var pageImg = qs("#support-page-qr-img");
+    if (pageImg) {
+      pageImg.addEventListener("error", function () {
+        var wrap = pageImg.parentNode;
+        if (wrap) wrap.hidden = true;
+      });
+    }
+    var showQr = qs("#support-page-show-qr");
+    if (showQr) {
+      showQr.addEventListener("click", function () {
+        openSupportModal(showQr);
+      });
+    }
+  }
+
   function mountSupportUI() {
     ensureFooterSupportSlot();
     ensureResultSupportSlots();
     qsa("[data-support-slot]").forEach(function (slot) {
-      fillSupportSlot(slot, { compact: slot.getAttribute("data-support-slot") === "result" });
+      fillSupportSlot(slot, slot.getAttribute("data-support-slot") || "footer");
     });
+    mountSupportPage();
   }
 
   function initSignup() {

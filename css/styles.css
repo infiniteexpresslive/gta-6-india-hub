@@ -322,20 +322,23 @@ input[type="email"], input[type="text"], input[type="number"], input[type="time"
 }
 .support-modal-dialog h2 { margin-top: 0; font-size: 1.2rem; }
 .support-modal-actions { display: grid; gap: 0.65rem; margin: 1rem 0; }
-.support-upi-box {
-  margin-top: 0.5rem; padding: 0.85rem;
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
-  background: rgba(8, 4, 14, 0.45);
+.support-btn-row { margin-top: 0.35rem; }
+.support-qr-wrap {
+  display: flex; justify-content: center; margin: 0.75rem 0;
+  min-height: 220px;
 }
-.support-upi-box img {
-  width: min(100%, 220px); height: auto; margin: 0.75rem auto;
+.support-qr-wrap img,
+.support-page-qr img {
+  width: 220px; height: 220px; object-fit: contain;
   border-radius: var(--radius-sm); background: #fff;
+  display: block;
 }
-.support-upi-id {
+.support-url-text {
   font-family: ui-monospace, Consolas, monospace;
   word-break: break-all;
   color: var(--orange);
   font-weight: 700;
+  font-size: 0.9rem;
 }
 .support-modal-close {
   position: absolute; top: 0.65rem; right: 0.65rem;

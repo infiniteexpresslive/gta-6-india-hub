@@ -48,12 +48,10 @@ window.GTA6_CONFIG = {
   /* TODO: your real email */
   contactEmail: "hello@example.com",
 
-  /* Support this site — leave empty to hide the CTA everywhere.
-     TODO: set buyMeACoffeeUrl and/or upiId (+ optional upiQrImage path) */
+  /* Buy Me a Coffee — leave buyMeACoffeeUrl empty to hide support UI everywhere */
   supportLinks: {
-    buyMeACoffeeUrl: "",
-    upiId: "",
-    upiQrImage: ""
+    buyMeACoffeeUrl: "https://buymeacoffee.com/gamedaytools",
+    buyMeACoffeeQr: "/assets/bmc-qr.png"
   },
 
   currency: "INR",
