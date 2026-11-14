@@ -63,4 +63,5 @@ Open `http://localhost:8080`.
 
 1. Set `supportLinks.buyMeACoffeeUrl` in `config.js` (e.g. `https://buymeacoffee.com/gamedaytools`). Leave empty to hide every support CTA.
 2. Replace `assets/bmc-qr.png` with your QR image, and keep `supportLinks.buyMeACoffeeQr` pointing at it (default `/assets/bmc-qr.png`).
-3. No third-party BMC widgets — only a plain link + optional QR modal.
+3. Brand kit copies live under `assets/bmc/` (from `bmcbrand/`): cup logo, full logo, yellow CTA button. Favicon: `assets/favicon.png`.
+4. No third-party BMC widgets — official button image + optional QR modal only.

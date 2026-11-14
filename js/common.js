@@ -205,13 +205,7 @@
 
     actions.innerHTML = "";
     if (bmc) {
-      var a = document.createElement("a");
-      a.className = "btn btn-primary";
-      a.href = bmc;
-      a.target = "_blank";
-      a.rel = "noopener";
-      a.textContent = t("support.bmc", "Buy Me a Coffee");
-      actions.appendChild(a);
+      actions.appendChild(makeBmcLink());
 
       var copyBtn = document.createElement("button");
       copyBtn.type = "button";
@@ -276,14 +270,44 @@
     supportLastFocus = null;
   }
 
-  function makeBmcLink(className) {
+  function makeBmcLink() {
     var a = document.createElement("a");
-    a.className = className || "btn btn-support";
+    a.className = "bmc-btn-link";
     a.href = supportBmcUrl();
     a.target = "_blank";
     a.rel = "noopener";
-    a.textContent = t("support.cta", "☕ Support this site");
+    a.setAttribute("aria-label", t("support.bmc", "Buy Me a Coffee"));
+    var img = document.createElement("img");
+    img.src = "assets/bmc/yellow-button.png";
+    img.alt = t("support.bmc", "Buy me a coffee");
+    img.width = 200;
+    img.height = 56;
+    img.loading = "lazy";
+    img.decoding = "async";
+    img.addEventListener("error", function () {
+      /* Fallback text button if brand asset missing */
+      a.className = "btn btn-support";
+      a.textContent = t("support.cta", "☕ Support this site");
+      a.removeChild(img);
+    });
+    a.appendChild(img);
     return a;
+  }
+
+  function ensureBrandIcons() {
+    if (!qs('link[rel="icon"]')) {
+      var icon = document.createElement("link");
+      icon.rel = "icon";
+      icon.type = "image/png";
+      icon.href = "assets/favicon.png";
+      document.head.appendChild(icon);
+    }
+    if (!qs('link[rel="apple-touch-icon"]')) {
+      var apple = document.createElement("link");
+      apple.rel = "apple-touch-icon";
+      apple.href = "assets/bmc/bmc-logo.png";
+      document.head.appendChild(apple);
+    }
   }
 
   function makeShowQrButton() {
@@ -322,7 +346,7 @@
       wrap.appendChild(blurb);
       var row = document.createElement("div");
       row.className = "btn-row support-btn-row";
-      row.appendChild(makeBmcLink("btn btn-support"));
+      row.appendChild(makeBmcLink());
       if (supportQrPath()) row.appendChild(makeShowQrButton());
       wrap.appendChild(row);
     } else if (kind === "footer") {
@@ -332,11 +356,11 @@
       wrap.appendChild(footBlurb);
       var footRow = document.createElement("div");
       footRow.className = "btn-row support-btn-row";
-      footRow.appendChild(makeBmcLink("btn btn-support"));
+      footRow.appendChild(makeBmcLink());
       if (supportQrPath()) footRow.appendChild(makeShowQrButton());
       wrap.appendChild(footRow);
     } else {
-      wrap.appendChild(makeBmcLink("btn btn-support"));
+      wrap.appendChild(makeBmcLink());
       if (supportQrPath()) wrap.appendChild(makeShowQrButton());
     }
 
@@ -398,22 +422,21 @@
         "</div>";
     }
     root.innerHTML =
+      '<img class="support-brand-logo" src="assets/bmc/bmc-full-logo.png" width="280" height="120" alt="Buy Me a Coffee" loading="lazy" decoding="async">' +
       qrBlock +
       '<p class="support-url-text">' +
       bmc.replace(/</g, "&lt;") +
       "</p>" +
-      '<div class="btn-row">' +
-      '<a class="btn btn-primary" href="' +
-      bmc.replace(/"/g, "") +
-      '" target="_blank" rel="noopener">' +
-      t("support.bmc", "Buy Me a Coffee") +
-      "</a>" +
-      (qr
-        ? '<button type="button" class="btn btn-ghost" id="support-page-show-qr">' +
-          t("support.showQr", "Show QR") +
-          "</button>"
-        : "") +
-      "</div>";
+      '<div class="btn-row" id="support-page-actions"></div>';
+    var actions = qs("#support-page-actions", root);
+    if (actions) {
+      actions.appendChild(makeBmcLink());
+      if (qr) {
+        var showQr = makeShowQrButton();
+        showQr.id = "support-page-show-qr";
+        actions.appendChild(showQr);
+      }
+    }
     var pageImg = qs("#support-page-qr-img");
     if (pageImg) {
       pageImg.addEventListener("error", function () {
@@ -421,15 +444,16 @@
         if (wrap) wrap.hidden = true;
       });
     }
-    var showQr = qs("#support-page-show-qr");
-    if (showQr) {
-      showQr.addEventListener("click", function () {
-        openSupportModal(showQr);
+    var brandLogo = qs(".support-brand-logo", root);
+    if (brandLogo) {
+      brandLogo.addEventListener("error", function () {
+        brandLogo.hidden = true;
       });
     }
   }
 
   function mountSupportUI() {
+    ensureBrandIcons();
     ensureFooterSupportSlot();
     ensureResultSupportSlots();
     qsa("[data-support-slot]").forEach(function (slot) {
