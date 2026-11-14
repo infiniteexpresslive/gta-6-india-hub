@@ -295,19 +295,30 @@
   }
 
   function ensureBrandIcons() {
-    if (!qs('link[rel="icon"]')) {
-      var icon = document.createElement("link");
-      icon.rel = "icon";
-      icon.type = "image/png";
-      icon.href = "assets/favicon.png";
-      document.head.appendChild(icon);
+    var mark = "assets/unlockist-mark.png?v=2";
+    var icoHref = "assets/favicon.ico?v=2";
+    function upsertIcon(rel, href, type, sizes) {
+      var el = qs('link[rel="' + rel + '"]');
+      if (!el) {
+        el = document.createElement("link");
+        el.rel = rel;
+        document.head.appendChild(el);
+      }
+      el.href = href;
+      if (type) el.type = type;
+      if (sizes) el.setAttribute("sizes", sizes);
     }
-    if (!qs('link[rel="apple-touch-icon"]')) {
-      var apple = document.createElement("link");
-      apple.rel = "apple-touch-icon";
-      apple.href = "assets/unlockist-mark.png";
-      document.head.appendChild(apple);
+    upsertIcon("icon", mark, "image/png", null);
+    var icoLink = document.querySelector('link[rel="icon"][sizes="any"]');
+    if (!icoLink) {
+      icoLink = document.createElement("link");
+      icoLink.rel = "icon";
+      icoLink.setAttribute("sizes", "any");
+      document.head.appendChild(icoLink);
     }
+    icoLink.href = icoHref;
+    upsertIcon("shortcut icon", mark, "image/png", null);
+    upsertIcon("apple-touch-icon", mark, null, null);
   }
 
   function makeShowQrButton() {
