@@ -54,7 +54,9 @@ npm run preview
 - `buildCommand: npm run build`
 - `outputDirectory: dist`
 
-Do **not** set Output Directory to `public` in the dashboard. Built site lands in `dist/` (HTML + hashed assets + copied `public/` files).
+Do **not** set Output Directory to `public` in the dashboard.
+
+Pretty paths: ercel.json sets cleanUrls: true and 	railingSlash: false so routes are /countdown, /cost-calculator, /support (not .html). Old .html URLs redirect to clean paths on Vercel. Local Vite middleware mirrors this. Built site lands in `dist/` (HTML + hashed assets + copied `public/` files).
 
 Before go-live: replace `https://example.com` in `public/config.js` (`baseUrl`), HTML canonical/OG tags, `public/sitemap.xml`, and `public/robots.txt`.
 
@@ -75,3 +77,4 @@ Before go-live: replace `https://example.com` in `public/config.js` (`baseUrl`),
 ## Brand / favicon
 
 Header + document icons use `/assets/unlockist-mark.png` (and `/assets/favicon.ico`). BMC cup/full logo/yellow button stay under `/assets/bmc/` for support CTAs only.
+

@@ -71,11 +71,17 @@
   }
 
   function markCurrentNav() {
-    var path = (location.pathname.split("/").pop() || "index.html").toLowerCase();
-    if (!path || path === "/") path = "index.html";
+    function norm(p) {
+      p = String(p || "/").split("?")[0].split("#")[0];
+      p = p.replace(/\.html$/i, "");
+      if (!p || p === "/" || p === "/index") return "/";
+      return p.replace(/\/+$/, "") || "/";
+    }
+    var path = norm(location.pathname);
     qsa(".site-nav a[href]").forEach(function (a) {
-      var href = (a.getAttribute("href") || "").split("/").pop().toLowerCase();
-      if (href === path) a.setAttribute("aria-current", "page");
+      var href = a.getAttribute("href") || "";
+      if (/^(https?:|mailto:|#)/i.test(href)) return;
+      if (norm(href) === path) a.setAttribute("aria-current", "page");
     });
   }
 

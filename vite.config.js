@@ -14,9 +14,57 @@ const pages = {
   notFound: resolve(__dirname, "404.html")
 };
 
+/** Pretty paths for local Vite (matches Vercel cleanUrls). */
+const CLEAN_ROUTES = {
+  "/countdown": "/countdown.html",
+  "/download-calculator": "/download-calculator.html",
+  "/cost-calculator": "/cost-calculator.html",
+  "/launch-planner": "/launch-planner.html",
+  "/edition-quiz": "/edition-quiz.html",
+  "/support": "/support.html",
+  "/about": "/about.html",
+  "/privacy": "/privacy.html",
+  "/404": "/404.html"
+};
+
+function cleanUrlsDevPlugin() {
+  function rewrite(req) {
+    if (!req.url) return;
+    const [pathname, search = ""] = req.url.split("?");
+    const q = search ? `?${search}` : "";
+    if (CLEAN_ROUTES[pathname]) {
+      req.url = CLEAN_ROUTES[pathname] + q;
+      return;
+    }
+    // Redirect /page.html → /page in browser via 301-like rewrite for HTML requests
+    if (pathname.endsWith(".html") && pathname !== "/index.html") {
+      const clean = pathname.replace(/\.html$/, "");
+      if (CLEAN_ROUTES[clean]) {
+        // leave file serving as .html for asset pipeline; links use clean paths
+      }
+    }
+  }
+  return {
+    name: "unlockist-clean-urls",
+    configureServer(server) {
+      server.middlewares.use((req, _res, next) => {
+        rewrite(req);
+        next();
+      });
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use((req, _res, next) => {
+        rewrite(req);
+        next();
+      });
+    }
+  };
+}
+
 export default defineConfig({
   appType: "mpa",
   publicDir: "public",
+  plugins: [cleanUrlsDevPlugin()],
   build: {
     outDir: "dist",
     emptyOutDir: true,
