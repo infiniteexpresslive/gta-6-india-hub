@@ -30,9 +30,10 @@ Open `http://localhost:8080` (serves minified root + readable config/data).
 ## Deploy
 
 1. Replace `https://example.com` in `config.js` `baseUrl`, HTML canonical/OG tags, `sitemap.xml`, `robots.txt`.
-2. Drag this folder to Vercel or Netlify (publish = site root).
-3. Map 404 → `404.html` if the host does not auto-detect it.
-4. Fill AdSense / analytics / affiliate / signup when ready.
+2. **Vercel:** `vercel.json` sets `framework: null`, `buildCommand: npm run build`, and `outputDirectory: "."` (site root — there is no `public/` folder). Do not set Output Directory to `public` in the dashboard.
+3. Netlify / drag-drop: publish = site root.
+4. Map 404 → `404.html` if the host does not auto-detect it.
+5. Fill AdSense / analytics / affiliate / signup when ready.
 
 ## Configure
 
