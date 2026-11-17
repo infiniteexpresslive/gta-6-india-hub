@@ -10,25 +10,22 @@ India-first unofficial fan utilities: **IST countdown**, **download time**, **co
 - Vanilla JS + shared CSS (`src/js`, `src/css`)
 - Editable runtime files in `public/`: `config.js`, `data/*.json`, `i18n/`, `assets/`
 - Neon-sunset UI + UnlockIST joystick mark; Buy Me a Coffee assets for support CTAs only
-- Launch reminders via Vercel serverless `api/signup.js` → Web3Forms (key in env)
 
 ## Project layout
 
 ```
 ├── index.html, countdown.html, …, 404.html   # Vite HTML entries (SEO meta per page)
-├── api/signup.js            # Vercel serverless signup → Web3Forms
 ├── src/
 │   ├── css/styles.css
 │   └── js/                  # common + tools + entries/*
 ├── public/
-│   ├── config.js            # edit brand, dates, affiliate, BMC, signupUrl
+│   ├── config.js            # edit brand, dates, affiliate, BMC
 │   ├── data/                # prices.json, editions.json
 │   ├── i18n/en.json
 │   ├── assets/              # unlockist-mark, favicon, bmc/*
 │   ├── robots.txt
 │   └── sitemap.xml
-├── vite.config.js           # MPA inputs → dist/ + clean URL + local /api/signup
-├── .env.example             # WEB3FORMS_ACCESS_KEY / SIGNUP_TO_EMAIL
+├── vite.config.js           # MPA inputs → dist/ + clean URLs
 └── vercel.json              # outputDirectory: dist, cleanUrls
 ```
 
@@ -37,7 +34,6 @@ India-first unofficial fan utilities: **IST countdown**, **download time**, **co
 ```bash
 cd "H:/DEV/GTA 6 HUB"
 npm install
-cp .env.example .env   # then paste WEB3FORMS_ACCESS_KEY
 npm run dev
 ```
 
@@ -58,26 +54,12 @@ Production Branch should be **`main`**.
 
 Before go-live: replace `https://example.com` in `public/config.js` (`baseUrl`), HTML canonical/OG tags, `public/sitemap.xml`, and `public/robots.txt`.
 
-### Launch reminders — env vars Vishwanath must set
-
-In **Vercel → Project → Settings → Environment Variables** (Production + Preview):
-
-| Variable | Required | Notes |
-|----------|----------|--------|
-| `WEB3FORMS_ACCESS_KEY` | **Yes** | Create free at [web3forms.com](https://web3forms.com) while logged in as **gamedaytools@gmail.com** |
-| `SIGNUP_TO_EMAIL` | No | Defaults to `gamedaytools@gmail.com` |
-
-Homepage “Notify me” POSTs JSON `{ email }` to `/api/signup`. The access key never ships in public JS. Until the key is set, the form shows an inline config error (no “not available yet” alert) and falls back to the contact email copy.
-
-Same vars in local `.env` for `npm run dev` (gitignored).
-
 ## Configure
 
 | Field | Where | Notes |
 |-------|--------|--------|
 | `siteName` | `public/config.js` | Brand string |
 | `baseUrl` | `public/config.js` | Live domain |
-| `signupUrl` | `public/config.js` | Default `/api/signup` |
 | `contactEmail` | `public/config.js` | `gamedaytools@gmail.com` |
 | `launchDate` / unlock modes | `public/config.js` | Unlock clock unconfirmed |
 | `defaultInstallSizeGb` | `public/config.js` | Download calc — TODO verify |
