@@ -200,6 +200,7 @@ input[type="email"], input[type="text"], input[type="number"], input[type="time"
   .form-row.inline { grid-template-columns: 1fr auto; align-items: end; display: grid; gap: 0.75rem; }
 }
 .help-text { font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0 0; }
+.help-text.is-error { color: var(--pink, #ff4d9a); }
 .field { margin-bottom: 0.25rem; }
 
 .notice {

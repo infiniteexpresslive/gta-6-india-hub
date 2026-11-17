@@ -490,26 +490,104 @@
     mountSupportPage();
   }
 
+  function signupEndpoint() {
+    var url = trimStr(cfg.signupUrl) || "/api/signup";
+    if (
+      !url ||
+      url === "#" ||
+      url.indexOf("TODO") !== -1 ||
+      /example\.com/i.test(url)
+    ) {
+      return "/api/signup";
+    }
+    return url;
+  }
+
   function initSignup() {
     var form = qs("#signup-form");
     if (!form) return;
+    var statusEl = qs("#signup-status");
+    var btn = qs('button[type="submit"]', form);
+
+    function setStatus(msg, isError) {
+      if (!statusEl) return;
+      statusEl.textContent = msg || "";
+      statusEl.classList.toggle("is-error", !!isError);
+    }
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var emailInput = qs('input[name="email"]', form);
+      var emailInput = qs('input[name="email"], #signup-email', form);
       var email = emailInput ? emailInput.value.trim() : "";
-      var url = cfg.signupUrl || "#";
-      if (!url || url.indexOf("TODO") !== -1 || url.indexOf("example.com") !== -1) {
-        alert("Signup is not available yet. Please check back later.");
+      var honey = qs('input[name="company"]', form);
+      if (honey && honey.value) {
+        setStatus("Thanks — you’re on the list.", false);
+        form.reset();
         return;
       }
-      if (cfg.signupMethod === "POST") {
-        form.action = url;
-        form.method = "POST";
-        form.submit();
-      } else {
-        var sep = url.indexOf("?") >= 0 ? "&" : "?";
-        location.href = url + sep + "email=" + encodeURIComponent(email);
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setStatus("Enter a valid email address.", true);
+        if (emailInput) emailInput.focus();
+        return;
       }
+
+      var endpoint = signupEndpoint();
+      var method = String(cfg.signupMethod || "POST").toUpperCase();
+
+      /* Legacy external Formspree/Google Form GET redirect */
+      if (method === "GET" && endpoint.indexOf("/api/") !== 0) {
+        var sep = endpoint.indexOf("?") >= 0 ? "&" : "?";
+        location.href = endpoint + sep + "email=" + encodeURIComponent(email);
+        return;
+      }
+
+      if (btn) btn.disabled = true;
+      setStatus("Sending…", false);
+
+      fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          email: email,
+          source: "unlockist-home"
+        })
+      })
+        .then(function (r) {
+          return r.json().then(function (data) {
+            return { ok: r.ok, status: r.status, data: data || {} };
+          }).catch(function () {
+            return { ok: r.ok, status: r.status, data: {} };
+          });
+        })
+        .then(function (res) {
+          if (res.ok && res.data.ok !== false) {
+            setStatus("Thanks — we’ll email launch reminders to that address.", false);
+            form.reset();
+            return;
+          }
+          if (res.status === 503) {
+            setStatus(
+              "Signup isn’t configured on this deploy yet. Email " +
+                (cfg.contactEmail || "gamedaytools@gmail.com") +
+                " to get reminders.",
+              true
+            );
+            return;
+          }
+          setStatus(
+            res.data.error || "Could not save your email. Try again later.",
+            true
+          );
+        })
+        .catch(function () {
+          setStatus("Network error — try again in a moment.", true);
+        })
+        .finally(function () {
+          if (btn) btn.disabled = false;
+        });
     });
   }
 

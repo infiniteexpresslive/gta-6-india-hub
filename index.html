@@ -119,9 +119,12 @@
             <label for="signup-email">Email</label>
             <input id="signup-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
           </div>
+          <!-- honeypot -->
+          <input type="text" name="company" value="" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;overflow:hidden">
           <button class="btn btn-primary" type="submit">Notify me</button>
         </form>
-        <p class="help-text" data-i18n="signup.help">Optional launch reminders — available when the operator enables signup.</p>
+        <p class="help-text" id="signup-status" aria-live="polite"></p>
+        <p class="help-text" data-i18n="signup.help">Optional IST launch reminders — we only use your email for UnlockIST launch notices.</p>
       </div>
     </section>
   </main>

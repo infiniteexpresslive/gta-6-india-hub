@@ -41,12 +41,11 @@ window.GTA6_CONFIG = {
     game: "https://example.com/affiliate/game-TODO"
   },
 
-  /* TODO: Formspree / Google Form / WhatsApp link */
-  signupUrl: "https://example.com/signup-TODO",
-  signupMethod: "GET",
+  /* Launch reminders → Vercel /api/signup (Web3Forms key in server env, not here) */
+  signupUrl: "/api/signup",
+  signupMethod: "POST",
 
-  /* TODO: your real email */
-  contactEmail: "hello@example.com",
+  contactEmail: "gamedaytools@gmail.com",
 
   /* Buy Me a Coffee — leave buyMeACoffeeUrl empty to hide support UI everywhere */
   supportLinks: {
