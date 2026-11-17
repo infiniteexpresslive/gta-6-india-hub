@@ -295,10 +295,11 @@
   }
 
   function ensureBrandIcons() {
-    var mark = "assets/unlockist-mark.png?v=2";
-    var icoHref = "assets/favicon.ico?v=2";
+    var mark = "assets/unlockist-mark.png?v=3";
+    var icoHref = "assets/favicon.ico?v=3";
     function upsertIcon(rel, href, type, sizes) {
-      var el = qs('link[rel="' + rel + '"]');
+      var nodes = document.querySelectorAll('link[rel="' + rel + '"]');
+      var el = nodes[0];
       if (!el) {
         el = document.createElement("link");
         el.rel = rel;
@@ -307,6 +308,11 @@
       el.href = href;
       if (type) el.type = type;
       if (sizes) el.setAttribute("sizes", sizes);
+      /* Drop any leftover BMC / old favicon links */
+      for (var i = 1; i < nodes.length; i++) {
+        if (nodes[i].getAttribute("sizes") === "any") continue;
+        nodes[i].parentNode.removeChild(nodes[i]);
+      }
     }
     upsertIcon("icon", mark, "image/png", null);
     var icoLink = document.querySelector('link[rel="icon"][sizes="any"]');
@@ -319,6 +325,11 @@
     icoLink.href = icoHref;
     upsertIcon("shortcut icon", mark, "image/png", null);
     upsertIcon("apple-touch-icon", mark, null, null);
+    /* Force header brand mark off any BMC cup */
+    qsa("img.logo-mark").forEach(function (img) {
+      img.src = mark;
+      img.removeAttribute("srcset");
+    });
   }
 
   function makeShowQrButton() {
