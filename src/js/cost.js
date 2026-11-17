@@ -101,7 +101,7 @@
       aff.setAttribute("rel", "sponsored noopener");
       aff.setAttribute("target", "_blank");
     }
-    fetch("data/prices.json")
+    fetch("/data/prices.json")
       .then(function (r) {
         if (!r.ok) throw new Error("fail");
         return r.json();

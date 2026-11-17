@@ -115,7 +115,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    fetch("data/editions.json")
+    fetch("/data/editions.json")
       .then(function (r) {
         if (!r.ok) throw new Error("fail");
         return r.json();

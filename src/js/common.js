@@ -38,7 +38,7 @@
 
   function loadI18n() {
     var locale = cfg.i18nLocale || "en";
-    return fetch("i18n/" + locale + ".json")
+    return fetch("/i18n/" + locale + ".json")
       .then(function (r) {
         if (!r.ok) throw new Error("i18n");
         return r.json();
@@ -278,7 +278,7 @@
     a.rel = "noopener";
     a.setAttribute("aria-label", t("support.bmc", "Buy Me a Coffee"));
     var img = document.createElement("img");
-    img.src = "assets/bmc/yellow-button.png";
+    img.src = "/assets/bmc/yellow-button.png";
     img.alt = t("support.bmc", "Buy me a coffee");
     img.width = 200;
     img.height = 56;
@@ -295,8 +295,8 @@
   }
 
   function ensureBrandIcons() {
-    var mark = "assets/unlockist-mark.png?v=3";
-    var icoHref = "assets/favicon.ico?v=3";
+    var mark = "/assets/unlockist-mark.png?v=3";
+    var icoHref = "/assets/favicon.ico?v=3";
     function upsertIcon(rel, href, type, sizes) {
       var nodes = document.querySelectorAll('link[rel="' + rel + '"]');
       var el = nodes[0];
@@ -444,7 +444,7 @@
         "</div>";
     }
     root.innerHTML =
-      '<img class="support-brand-logo" src="assets/bmc/bmc-full-logo.png" width="280" height="120" alt="Buy Me a Coffee" loading="lazy" decoding="async">' +
+      '<img class="support-brand-logo" src="/assets/bmc/bmc-full-logo.png" width="280" height="120" alt="Buy Me a Coffee" loading="lazy" decoding="async">' +
       qrBlock +
       '<p class="support-url-text">' +
       bmc.replace(/</g, "&lt;") +
